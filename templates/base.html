@@ -5,7 +5,6 @@
         {% block extra_head %}
         {% endblock %}
     </head>
-
     <body>
         <header>
             <nav class="navbar">
@@ -49,7 +48,7 @@
                                     <span class="profile-name"
                                         >{{ session.get('name', session.get('username', 'User')) }}</span
                                     >
-                                    <i class="fas fa-caret-down"></i>
+                                    <i class="fas fa-caret-down" id="caret-down"></i>
                                 </a>
                                 <div class="dropdown-content">
                                     <div class="profile-info">
@@ -66,7 +65,20 @@
                                         </div>
                                     </div>
                                     <hr />
-                                    <a href="{{ url_for('auth.logout') }}" class="dropdown-link">Logout</a>
+                                    <div>
+                                        <div class="theme-switch-wrapper dropdown-link">
+                                            <label class="theme-switch-label" for="theme-checkbox">
+                                                <span style="margin-right: 8px; vertical-align: middle;"
+                                                    >Dark theme</span
+                                                >
+                                                <div class="theme-switch">
+                                                    <input type="checkbox" id="theme-checkbox" />
+                                                    <div class="slider round"></div>
+                                                </div>
+                                            </label>
+                                        </div>
+                                        <a href="{{ url_for('auth.logout') }}" class="dropdown-link">Logout</a>
+                                    </div>
                                 </div>
                             </li>
                         {% endif %}
@@ -77,16 +89,18 @@
 
         <main class="container">{% block content %}{% endblock %}</main>
 
-        <footer>
+        <footer class="footer">
             <div class="footer-container">© {{ (now().year) }} Campus Scheduler. All rights reserved.</div>
         </footer>
 
         {% block scripts %}
             <script src="{{ url_for('static', filename='js/navbar.js') }}" defer></script>
             <script>
-                Sentry.init({
-                    dsn: "https://bd6cee1c1e85487299af017f4c6b0117@app.glitchtip.com/11317",
-                    tracesSampleRate: 0.01,
+                document.addEventListener("DOMContentLoaded", () => {
+                    Sentry.init({
+                        dsn: "https://bd6cee1c1e85487299af017f4c6b0117@app.glitchtip.com/11317",
+                        tracesSampleRate: 0.01,
+                    });
                 });
             </script>
         {% endblock %}

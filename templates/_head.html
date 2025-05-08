@@ -5,11 +5,16 @@
 <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&display=swap" rel="stylesheet" />
+
+<link
+    href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet"
+/>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" />
 <link rel="icon" href="{{ url_for('static', filename='images/favicon.ico') }}" />
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11" defer></script>
-<script src="https://browser.sentry-cdn.com/7.60.0/bundle.min.js" crossorigin="anonymous"></script>
+<script src="https://browser.sentry-cdn.com/7.60.0/bundle.min.js" crossorigin="anonymous" defer></script>
+<script src="{{ url_for('static', filename='js/theme.js') }}"></script>
 {% block seo %}
     <meta property="og:title" content="Campus Scheduler" />
     <meta property="og:description" content="Create and manage your events and tasks easily." />
