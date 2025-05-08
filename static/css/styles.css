@@ -1100,7 +1100,6 @@ td.editable {
 .projects-table {
     width: 100%;
     border-collapse: collapse;
-    margin-top: 1.5rem;
     background-color: var(--surface-color);
     text-align: left;
 }
