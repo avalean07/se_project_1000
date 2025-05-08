@@ -1082,3 +1082,41 @@ h2 {
     color: #856404;
     font-weight: 600;
 }
+/*
+    FAQ Accordion Styling 
+*/
+
+.accordion{
+    background-color: #fff; /*the white background*/
+    color: #6200ee;         /*the purple primary colour Illia was using*/
+    cursor: pointer;          /*making the cursor a pointer when hovering over it*/
+    padding: 1rem 1.25rem;    /*the spacing scale used above as well*/
+    width: 100%;
+    border: 2px solid #6200ee;  /*purple border*/
+    border-radius: 8px;
+    text-align: left;
+    font-size: 1rem;
+    font-weight: 600;
+    transition: background-color 0.2s, color 0.2s;  /*made the animation pretty snappy*/
+    margin-top: 1rem;
+}
+
+.accordion:hover,
+.accordion.active{
+    background-color: #6200ee;  /*filling with purple on hover*/
+    color: #fff;                /*inverting text to white, otherwise it's not readable*/
+}
+
+.panel{
+    background-color: #f4f4f4;          /*just white, it's the background*/
+    border-left: 4px solid #7b42d1c1;   /*semi-transparent gradient color*/
+    border-right: 4px solid #7b42d1c1;
+    border-radius: 0 0 8px 8px;           /*rounding bottom corners only*/
+    max-height: 0;
+    overflow:hidden;
+    transition: max-height 0.3s ease;
+    padding: 0 1.25rem;                   /*the horizontal padding*/
+    margin-bottom: 1rem;
+    font-weight: 400;                     /*thickness of text*/
+    line-height: 1.6;
+}
