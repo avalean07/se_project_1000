@@ -186,9 +186,28 @@
 }
 
 :root[data-theme="dark"] .fc.fc .fc-scrollgrid-section-sticky>*,
-:root[data-theme="dark"] .fc .fc-list-sticky .fc-list-day>*,
-:root[data-theme="dark"] .fc .fc-list-event:hover td {
-    background-color: var(--surface-color) !important;
+:root[data-theme="dark"] .fc.fc .fc-list-sticky .fc-list-day>*,
+:root[data-theme="dark"] .fc.fc .fc-list-event:hover td {
+    background-color: var(--surface-color);
+}
+
+:root[data-theme="dark"] .fc.fc .fc-button-primary:not(:disabled).fc-button-active,
+:root[data-theme="dark"] .fc.fc .fc-button-primary:not(:disabled):active {
+    background-color: var(--primary-color);
+    color: var(--on-primary-color);
+    transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
+}
+
+:root[data-theme="dark"] .fc.fc .fc-button-primary:not(:disabled):hover {
+    background-color: var(--primary-hover-color);
+    color: var(--on-primary-color);
+    transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
+}
+
+:root[data-theme="dark"] .fc-h-event.fc-h-event,
+:root[data-theme="dark"] .fc-button-group>* {
+    background-color: var(--cost-crashing-cell-border-color);
+    border: 1px solid var(--input-border-color);
 }
 
 :root[data-theme="dark"] .navbar.navbar,
