@@ -1117,58 +1117,82 @@ td.editable {
     color: #856404;
     font-weight: 600;
 }
+
 /*
     FAQ Accordion Styling 
 */
 
-.accordion{
-    background-color: #fff; /*the white background*/
-    color: #6200ee;         /*the purple primary colour Illia was using*/
-    cursor: pointer;          /*making the cursor a pointer when hovering over it*/
-    padding: 1rem 1.25rem;    /*the spacing scale used above as well*/
+.accordion {
+    display: inline-flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #fff;
+    /*the white background*/
+    color: #6200ee;
+    /*the purple primary colour Illia was using*/
+    cursor: pointer;
+    /*making the cursor a pointer when hovering over it*/
+    padding: 1rem 1.25rem;
+    /*the spacing scale used above as well*/
     width: 100%;
-    border: 2px solid #6200ee;  /*purple border*/
-    border-radius: 8px;
+    border: none;
+    border-radius: .5rem;
     text-align: left;
     font-size: 1rem;
     font-weight: 600;
-    transition: background-color 0.2s, color 0.2s, margin-bottom 0.2s;  /*made the animation pretty snappy*/
-    margin: 1rem 0 0;       /* top margin only, no bottom gap */
-    position: relative;     /*position is relative to the panel*/
-    z-index: 2;             /*making the button sit above the panel*/
+    transition: background-color 0.2s, color 0.2s;
+    /*made the animation pretty snappy*/
+    margin: 1rem 0 0;
+
 }
 
 .accordion:hover,
-.accordion.active{
-    background-color: #6200ee;   /*filling with purple on hover*/
-    color: #fff;                 /*inverting text to white, otherwise it's not readable*/
-    margin-bottom: -2px;           /*pulling the bottom edge up so it overlaps the panel’s top border*/
+.accordion.active {
+    background-color: #6200ee;
+    /*filling with purple on hover*/
+    color: #fff;
+    /*inverting text to white, otherwise it's not readable*/
 }
 
-.panel{
-    background: #fff;          /*just white, it's the background*/
+.accordion:hover i,
+.accordion.active i {
+    color: #fff;
+}
+
+.panel {
+    background: #fff;
+    /*just white, it's the background*/
     border: none;
-    border-bottom-left-radius: 8px;  
-    border-bottom-right-radius: 8px; 
-
-    max-height: 0;
-    overflow: hidden;
-
-    padding: 0rem 1.25rem;                   /*the horizontal padding*/
-    margin: 0;                        /*no negative margin here*/
-
-    transition: max-height 0.3s ease;
-    position: relative;
-    z-index: 1;                            /*smaller stack number*/
-}
-
-.accordion.active + .panel{        
-    /*full purple border, except for between the question and the answer*/
-    border: 2px solid #6200ee;
-    border-top: none;
     border-bottom-left-radius: 8px;
     border-bottom-right-radius: 8px;
 
-    padding: 1rem 1.25rem;                 
-    margin: 0 0 1rem;
+    max-height: 0;
+    overflow: clip;
+
+    transition: max-height 0.3s ease;
+    padding: 0 1rem;
+}
+
+.panel p {
+    margin: 0;
+    padding: 1rem 0;
+    font-size: 0.95rem;
+    line-height: 1.5;
+    color: #444;
+}
+
+.accordion.active+.panel {
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+}
+
+.accordion i {
+    font-size: 1.2rem;
+    color: #6200ee;
+    transition: transform 0.3s ease, color 0.3s ease;
+}
+
+.accordion.active i {
+    transform: rotate(180deg);
+    color: #fff;
 }
