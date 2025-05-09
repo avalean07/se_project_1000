@@ -1467,6 +1467,7 @@ td.editable {
     display: inline-flex;
     align-items: center;
     justify-content: space-between;
+    gap: 1rem;
     background-color: var(--surface-color);
     /*the white background*/
     color: var(--primary-color);
