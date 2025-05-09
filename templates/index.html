@@ -26,7 +26,7 @@
             What is Campus Scheduler?
             <i class="fas fa-caret-down"></i>
         </button>
-        <div class="panel" id="panel-1" role="region" aria-labelledby="accordion-btn-1">
+        <div class="panel" id="panel-1" role="region" aria-labelledby="accordion-btn-1" aria-hidden="true">
             <p>
                 Campus Scheduler is your <strong>all-in-one solution</strong> for managing everyday campus activities.
                 With it, you can schedule appointments with <em>professors, supervisors, colleagues, and more</em>. It
@@ -39,7 +39,7 @@
             Why use our product?
             <i class="fas fa-caret-down"></i>
         </button>
-        <div class="panel" id="panel-2" role="region" aria-labelledby="accordion-btn-2">
+        <div class="panel" id="panel-2" role="region" aria-labelledby="accordion-btn-2" aria-hidden="true">
             <p>
                 Our product empowers users to manage their time more efficiently than ever before. Campus Scheduler
                 offers exceptional flexibility for organizing meetings, activities, and projects with just a few simple
@@ -51,7 +51,7 @@
             Can I schedule meetings inside Campus Scheduler?
             <i class="fas fa-caret-down"></i>
         </button>
-        <div class="panel" id="panel-3" role="region" aria-labelledby="accordion-btn-3">
+        <div class="panel" id="panel-3" role="region" aria-labelledby="accordion-btn-3" aria-hidden="true">
             <p>
                 <strong>Yes!</strong> Campus Scheduler allows you—<em>or your supervisor</em>—to schedule appointments
                 and meetings with ease.
@@ -62,7 +62,7 @@
             Can I set deadlines for my employees?
             <i class="fas fa-caret-down"></i>
         </button>
-        <div class="panel" id="panel-4" role="region" aria-labelledby="accordion-btn-4">
+        <div class="panel" id="panel-4" role="region" aria-labelledby="accordion-btn-4" aria-hidden="true">
             <p>
                 <strong>Yes!</strong> Campus Scheduler enables project managers to
                 <em>set deadlines for their employees</em>. Everyone can view these deadlines on the shared calendar and
@@ -72,14 +72,14 @@
     </section>
 
     <script>
-        var acc = document.getElementsByClassName("accordion");
+        const acc = document.getElementsByClassName("accordion");
 
-        for (var i = 0; i < acc.length; i++) {
+        for (let i = 0; i < acc.length; i++) {
             acc[i].addEventListener("click", function () {
                 this.classList.toggle("active");
-
-                var panel = this.nextElementSibling;
-
+                this.setAttribute("aria-expanded", this.classList.contains("active"));
+                const panel = this.nextElementSibling;
+                panel.setAttribute("aria-hidden", !this.classList.contains("active"));
                 if (panel.style.maxHeight) {
                     panel.style.maxHeight = null;
                 } else {
