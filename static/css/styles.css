@@ -1097,26 +1097,43 @@ h2 {
     text-align: left;
     font-size: 1rem;
     font-weight: 600;
-    transition: background-color 0.2s, color 0.2s;  /*made the animation pretty snappy*/
-    margin-top: 1rem;
+    transition: background-color 0.2s, color 0.2s, margin-bottom 0.2s;  /*made the animation pretty snappy*/
+    margin: 1rem 0 0;       /* top margin only, no bottom gap */
+    position: relative;     /*position is relative to the panel*/
+    z-index: 2;             /*making the button sit above the panel*/
 }
 
 .accordion:hover,
 .accordion.active{
-    background-color: #6200ee;  /*filling with purple on hover*/
-    color: #fff;                /*inverting text to white, otherwise it's not readable*/
+    background-color: #6200ee;   /*filling with purple on hover*/
+    color: #fff;                 /*inverting text to white, otherwise it's not readable*/
+    margin-bottom: -2px;           /*pulling the bottom edge up so it overlaps the panel’s top border*/
 }
 
 .panel{
-    background-color: #f4f4f4;          /*just white, it's the background*/
-    border-left: 4px solid #7b42d1c1;   /*semi-transparent gradient color*/
-    border-right: 4px solid #7b42d1c1;
-    border-radius: 0 0 8px 8px;           /*rounding bottom corners only*/
+    background: #fff;          /*just white, it's the background*/
+    border: none;
+    border-bottom-left-radius: 8px;  
+    border-bottom-right-radius: 8px; 
+
     max-height: 0;
-    overflow:hidden;
+    overflow: hidden;
+
+    padding: 0rem 1.25rem;                   /*the horizontal padding*/
+    margin: 0;                        /*no negative margin here*/
+
     transition: max-height 0.3s ease;
-    padding: 0 1.25rem;                   /*the horizontal padding*/
-    margin-bottom: 1rem;
-    font-weight: 400;                     /*thickness of text*/
-    line-height: 1.6;
+    position: relative;
+    z-index: 1;                            /*smaller stack number*/
+}
+
+.accordion.active + .panel{        
+    /*full purple border, except for between the question and the answer*/
+    border: 2px solid #6200ee;
+    border-top: none;
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+
+    padding: 1rem 1.25rem;                 
+    margin: 0 0 1rem;
 }
