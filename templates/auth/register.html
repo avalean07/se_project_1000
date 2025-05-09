@@ -2,163 +2,173 @@
 {% block title %}Register{% endblock %}
 
 {% block content %}
-<div class="login-container">
-    <h2>Register</h2>
-    <form method="POST" action="{{ url_for('auth.register') }}" onsubmit="return validateForms()">
+    <div class="login-container">
+        <h2>Register</h2>
+        <form method="POST" action="{{ url_for('auth.register') }}" onsubmit="return validateForms()">
+            <div class="form-group">
+                <label for="first_name">First Name <span style="color: red;">*</span></label>
+                <input type="text" id="first_name" name="first_name" required placeholder="Enter your first name" />
+            </div>
 
+            <div class="form-group">
+                <label for="second_name">Second name <span style="color: red;">*</span></label>
+                <input type="text" id="second_name" name="second_name" required placeholder="Enter your second name" />
+            </div>
 
-        <div class="form-group">
-            <label for="first_name">First Name <span style="color: red;">*</span></label>
-            <input type="text" id="first_name" name="first_name" required placeholder="Enter your first name">
-        </div>
+            <div class="form-group">
+                <label for="birthday_date">Date of Birth <span style="color: red;">*</span></label>
+                <input type="date" id="birthday_date" name="birthday_date" required />
+            </div>
 
-        <div class="form-group">
-            <label for="second_name">Second name <span style="color: red;">*</span></label>
-            <input type="text" id="second_name" name="second_name" required placeholder="Enter your second name">
-        </div>
+            <div class="form-group">
+                <label for="email">Email <span style="color: red;">*</span></label>
+                <input type="email" id="email" name="email" required placeholder="Enter your work email" />
+                <small id="email-error" style="color: red; margin-top: 0.5rem; display: none;"></small>
+            </div>
 
+            <div class="form-group">
+                <label for="username">Desired Username <span style="color: red;">*</span></label>
+                <input type="text" id="username" name="username" required placeholder="Enter your username" />
+            </div>
+            <small id="username-error" style="margin: 0.5rem 0; display: none; text-align: left;"
+                >Username is already taken</small
+            >
+            <div class="form-group">
+                <label for="password">Password <span style="color: red;">*</span></label>
+                <input
+                    type="password"
+                    id="password"
+                    name="password"
+                    required
+                    minlength="8"
+                    placeholder="Enter your password"
+                />
+            </div>
 
-        <div class="form-group">
-            <label for="birthday_date">Date of Birth <span style="color: red;">*</span></label>
-            <input type="date" id="birthday_date" name="birthday_date" required>
-        </div>
+            <div class="form-group">
+                <label for="confirm_password">Confirm Password <span style="color: red;">*</span></label>
+                <input
+                    type="password"
+                    id="confirm_password"
+                    name="confirm_password"
+                    required
+                    minlength="8"
+                    placeholder="Confirm your password"
+                />
+                <small id="password-error" style="color: red; margin-top: 0.5rem; display: none;"
+                    >Passwords do not match</small
+                >
+            </div>
+            <div class="form-group">
+                <label for="role_name">Role</label>
+                <select name="role_name" id="role_name">
+                    <option value="Admin">Admin</option>
+                    <option value="Manager">Manager</option>
+                    <option value="Worker">Worker</option>
+                </select>
+            </div>
 
-        <div class="form-group">
-            <label for="email">Email <span style="color: red;">*</span></label>
-            <input type="email" id="email" name="email" required placeholder="Enter your work email">
-            <small id="email-error" style="color: red; margin-top: 0.5rem; display: none;"></small>
-        </div>
+            <button type="submit" class="btn btn-primary sign-in-btn">Register</button>
+        </form>
 
-        <div class="form-group">
-            <label for="username">Desired Username <span style="color: red;">*</span></label>
-            <input type="text" id="username" name="username" required placeholder="Enter your username">
-        </div>
-        <small id="username-error" style="margin: 0.5rem 0; display: none; text-align: left;">Username is
-            already
-            taken</small>
-        <div class="form-group">
-            <label for="password">Password <span style="color: red;">*</span></label>
-            <input type="password" id="password" name="password" required minlength="8"
-                placeholder="Enter your password">
-        </div>
+        {% if error %}
+            <p style="color: red;">{{ error }}</p>
+        {% endif %}
+    </div>
 
-        <div class="form-group">
-            <label for="confirm_password">Confirm Password <span style="color: red;">*</span></label>
-            <input type="password" id="confirm_password" name="confirm_password" required minlength="8"
-                placeholder="Confirm your password">
-            <small id="password-error" style="color: red; margin-top: 0.5rem; display: none;">Passwords do not
-                match</small>
-        </div>
-        <div class="form-group">
-            <label for="role_name">Role</label>
-            <select name="role_name" id="role_name">
-                <option value="Admin">Admin</option>
-                <option value="Manager">Manager</option>
-                <option value="Worker">Worker</option>
-            </select>
-        </div>
+    <script>
+        function validateForms() {
+            let password = document.getElementById("password").value;
+            let username = document.getElementById("username").value;
+            let confirmPassword = document.getElementById("confirm_password").value;
+            let passwordError = document.getElementById("password-error");
 
-        <button type="submit" class="btn btn-primary sign-in-btn">Register</button>
-    </form>
-
-    {% if error %}
-    <p style="color: red;">{{ error }}</p>
-    {% endif %}
-</div>
-
-<script>
-    function validateForms() {
-        let password = document.getElementById("password").value;
-        let username = document.getElementById("username").value;
-        let confirmPassword = document.getElementById("confirm_password").value;
-        let passwordError = document.getElementById("password-error");
-
-        if (password !== confirmPassword) {
-            passwordError.style.display = "block";
-            return false;
-        } else {
-            passwordError.style.display = "none";
+            if (password !== confirmPassword) {
+                passwordError.style.display = "block";
+                return false;
+            } else {
+                passwordError.style.display = "none";
+            }
+            fetch("{{ url_for('auth.check_username') }}", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ username: username }),
+            })
+                .then((response) => response.json())
+                .then((username) => {
+                    return !username.exists;
+                });
+            fetch("{{ url_for('auth.check_email') }}", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ email: email }),
+            })
+                .then((response) => response.json())
+                .then((email) => {
+                    return !email.exists;
+                });
+            return true;
         }
-        fetch("{{ url_for('auth.check_username') }}", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ username: username })
-        })
-            .then(response => response.json())
-            .then(username => {
-                return !username.exists;
-            });
-        fetch("{{ url_for('auth.check_email') }}", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ email: email })
-        })
-            .then(response => response.json())
-            .then(email => {
-                return !email.exists;
-            });
-        return true;
-    }
-    // Real-time validation for matching passwords
-    document.getElementById("confirm_password").addEventListener("input", function () {
-        let password = document.getElementById("password").value;
-        let confirmPassword = this.value;
-        let passwordError = document.getElementById("password-error");
-        passwordError.style.display = (password !== confirmPassword) ? "block" : "none";
-    });
+        // Real-time validation for matching passwords
+        document.getElementById("confirm_password").addEventListener("input", function () {
+            let password = document.getElementById("password").value;
+            let confirmPassword = this.value;
+            let passwordError = document.getElementById("password-error");
+            passwordError.style.display = password !== confirmPassword ? "block" : "none";
+        });
 
-    document.getElementById("username").addEventListener("blur", function () {
-        const username = this.value;
-        if (!username) {
-            return;
-        }
-        fetch("{{ url_for('auth.check_username') }}", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ username: username })
-        })
-            .then(response => response.json())
-            .then(data => {
-                let errorEl = document.getElementById("username-error");
-                errorEl.style.display = "block";
-
-                if (data.exists) {
-                    errorEl.innerText = "Username already exists";
-                    errorEl.style.color = "red";
-                } else {
-                    errorEl.innerText = "Username is available";
-                    errorEl.style.color = "green";
-                }
-            });
-    });
-    document.getElementById("email").addEventListener("blur", function () {
-        const email = this.value;
-        if (!email) {
-            return;
-        }
-        let errorEl = document.getElementById("email-error");
-
-        const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
-        if (!emailPattern.test(email)) {
-            errorEl.style.display = "block";
-            errorEl.innerText = "Email is not valid";
-            return;
-        }
-        fetch("{{ url_for('auth.check_email') }}", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ email: email })
-        })
-            .then(response => response.json())
-            .then(data => {
-                if (data.exists) {
+        document.getElementById("username").addEventListener("blur", function () {
+            const username = this.value;
+            if (!username) {
+                return;
+            }
+            fetch("{{ url_for('auth.check_username') }}", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ username: username }),
+            })
+                .then((response) => response.json())
+                .then((data) => {
+                    let errorEl = document.getElementById("username-error");
                     errorEl.style.display = "block";
-                    errorEl.innerHTML = "Email is taken. <a href='{{ url_for('auth.login') }}' style='color: purple; text-decoration: underline;'>Login</a>";
-                } else {
-                    errorEl.style.display = "none";
 
-                }
-            });
-    });
-</script>
+                    if (data.exists) {
+                        errorEl.innerText = "Username already exists";
+                        errorEl.style.color = "red";
+                    } else {
+                        errorEl.innerText = "Username is available";
+                        errorEl.style.color = "green";
+                    }
+                });
+        });
+        document.getElementById("email").addEventListener("blur", function () {
+            const email = this.value;
+            if (!email) {
+                return;
+            }
+            let errorEl = document.getElementById("email-error");
+
+            const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailPattern.test(email)) {
+                errorEl.style.display = "block";
+                errorEl.innerText = "Email is not valid";
+                return;
+            }
+            fetch("{{ url_for('auth.check_email') }}", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ email: email }),
+            })
+                .then((response) => response.json())
+                .then((data) => {
+                    if (data.exists) {
+                        errorEl.style.display = "block";
+                        errorEl.innerHTML =
+                            "Email is taken. <a href='{{ url_for('auth.login') }}' style='color: purple; text-decoration: underline;'>Login</a>";
+                    } else {
+                        errorEl.style.display = "none";
+                    }
+                });
+        });
+    </script>
 {% endblock %}

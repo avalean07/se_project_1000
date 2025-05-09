@@ -1,83 +1,105 @@
-{% extends "base.html" %} {% block title %}Project Analysis{% endblock %} {% block content %}
-<h1 class="title">Project Analysis</h1>
+{% extends "base.html" %} {% block title %}Project Analysis{% endblock %}
+{% block content %}
+    <h1 class="title">Project Analysis</h1>
 
-<section class="analysis-section">
-    <h2>Critical Path Calculation</h2>
+    <section class="analysis-section">
+        <h2>Critical Path Calculation</h2>
 
-    {% if projects_data %} {% for project in projects_data %}
-    <div class="project-analysis">
-        <h3>
-            {{ project.project_name }} ({{ project.start_date.strftime('%Y-%m-%d') if project.start_date else 'N/A' }} -
-            {{ project.end_date.strftime('%Y-%m-%d') if project.end_date else 'N/A' }})
-        </h3>
-        {% if project.tasks %}
-        <ol class="task-list-ordered">
-            {% for task in project.tasks %}
-            <li>
-                {{ task.task_name }} (Deadline: {{ task.deadline.strftime('%Y-%m-%d') if task.deadline else 'N/A' }},
-                Status: {{ task.status }})
-            </li>
+        {% if projects_data %}
+            {% for project in projects_data %}
+                <div class="project-analysis">
+                    <h3>
+                        {{ project.project_name }}
+                        ({{ project.start_date.strftime('%Y-%m-%d') if project.start_date else 'N/A' }} -
+                        {{ project.end_date.strftime('%Y-%m-%d') if project.end_date else 'N/A' }})
+                    </h3>
+                    {% if project.tasks %}
+                        <ol class="task-list-ordered">
+                            {% for task in project.tasks %}
+                                <li>
+                                    {{ task.task_name }} (Deadline:
+                                    {{ task.deadline.strftime('%Y-%m-%d') if task.deadline else 'N/A' }}, Status:
+                                    {{ task.status }})
+                                </li>
+                            {% endfor %}
+                        </ol>
+                        <p>
+                            <strong>Project End (Latest Deadline):</strong> {{
+                                project.tasks[-1].deadline.strftime('%Y-%m-%d') if
+                                project.tasks and project.tasks[-1].deadline else 'N/A'
+                            }}
+                        </p>
+                    {% else %}
+                        <p>No tasks found for this project.</p>
+                    {% endif %}
+                </div>
             {% endfor %}
-        </ol>
-        <p>
-            <strong>Project End (Latest Deadline):</strong> {{ project.tasks[-1].deadline.strftime('%Y-%m-%d') if
-            project.tasks and project.tasks[-1].deadline else 'N/A' }}
-        </p>
         {% else %}
-        <p>No tasks found for this project.</p>
+            <p>No projects found with tasks for deadline-based path analysis.</p>
         {% endif %}
-    </div>
-    {% endfor %} {% else %}
-    <p>No projects found with tasks for deadline-based path analysis.</p>
-    {% endif %}
-</section>
+    </section>
 
-<section class="analysis-section">
-    <h2>Cost Crashing Analysis Data</h2>
+    <section class="analysis-section">
+        <h2>Cost Crashing Analysis Data</h2>
 
-    {% if projects_data %} {% for project in projects_data %}
-    <div class="project-analysis">
-        <h3>{{ project.project_name }} - Crashing Data</h3>
-        {% if project.tasks %}
-        <div class="table-responsive">
-            <table class="cost-crashing-table">
-                <thead>
-                    <tr>
-                        <th>Task Name</th>
-                        <th>Normal Duration</th>
-                        <th>Crash Duration</th>
-                        <th>Normal Cost</th>
-                        <th>Crash Cost</th>
-                        <th>Time Saved</th>
-                        <th>Cost Increase</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for task in project.tasks %}
-                    <tr>
-                        <td>{{ task.task_name }}</td>
-                        <td>{{ task.normal_duration if task.normal_duration is not none else 'N/A' }}</td>
-                        <td>{{ task.crash_duration if task.crash_duration is not none else 'N/A' }}</td>
-                        <td>{{ "${:,.2f}".format(task.normal_cost) if task.normal_cost is not none else 'N/A' }}</td>
-                        <td>{{ "${:,.2f}".format(task.crash_cost) if task.crash_cost is not none else 'N/A' }}</td>
-                        {% set time_saved = task.normal_duration - task.crash_duration if task.normal_duration is not
-                        none and task.crash_duration is not none else None %}
-                        <td>{{ time_saved if time_saved is not none else 'N/A' }}</td>
-                        {% set cost_increase = task.crash_cost - task.normal_cost if task.crash_cost is not none and
-                        task.normal_cost is not none else None %}
-                        <td>{{ "${:,.2f}".format(cost_increase) if cost_increase is not none else 'N/A' }}</td>
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
-        </div>
+        {% if projects_data %}
+            {% for project in projects_data %}
+                <div class="project-analysis">
+                    <h3>{{ project.project_name }} - Crashing Data</h3>
+                    {% if project.tasks %}
+                        <div class="table-responsive">
+                            <table class="cost-crashing-table">
+                                <thead>
+                                    <tr>
+                                        <th>Task Name</th>
+                                        <th>Normal Duration</th>
+                                        <th>Crash Duration</th>
+                                        <th>Normal Cost</th>
+                                        <th>Crash Cost</th>
+                                        <th>Time Saved</th>
+                                        <th>Cost Increase</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for task in project.tasks %}
+                                        <tr>
+                                            <td>{{ task.task_name }}</td>
+                                            <td>
+                                                {{ task.normal_duration if task.normal_duration is not none else 'N/A' }}
+                                            </td>
+                                            <td>
+                                                {{ task.crash_duration if task.crash_duration is not none else 'N/A' }}
+                                            </td>
+                                            <td>
+                                                {{ "${:,.2f}".format(task.normal_cost) if task.normal_cost is not none else 'N/A' }}
+                                            </td>
+                                            <td>
+                                                {{ "${:,.2f}".format(task.crash_cost) if task.crash_cost is not none else 'N/A' }}
+                                            </td>
+                                            {%
+                                                set time_saved = task.normal_duration - task.crash_duration if task.normal_duration is not
+                                                none and task.crash_duration is not none else None
+                                            %}
+                                            <td>{{ time_saved if time_saved is not none else 'N/A' }}</td>
+                                            {%
+                                                set cost_increase = task.crash_cost - task.normal_cost if task.crash_cost is not none and
+                                                task.normal_cost is not none else None
+                                            %}
+                                            <td>
+                                                {{ "${:,.2f}".format(cost_increase) if cost_increase is not none else 'N/A' }}
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    {% else %}
+                        <p>No tasks found for this project.</p>
+                    {% endif %}
+                </div>
+            {% endfor %}
         {% else %}
-        <p>No tasks found for this project.</p>
+            <p>No projects found with tasks for cost crashing analysis.</p>
         {% endif %}
-    </div>
-    {% endfor %} {% else %}
-    <p>No projects found with tasks for cost crashing analysis.</p>
-    {% endif %}
-</section>
-
+    </section>
 {% endblock %}

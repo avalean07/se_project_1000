@@ -37,11 +37,23 @@ google_bp = make_google_blueprint(
 
 def login_required(view):
     @functools.wraps(view)
-    def wrapped_view(**kwargs):
+    def wrapped_view(*args, **kwargs):
         if "username" not in session:
             return redirect(url_for("auth.login"))
 
-        return view(**kwargs)
+        return view(*args, **kwargs)
+
+    return wrapped_view
+
+
+def admin_or_manager_required(view):
+    @functools.wraps(view)
+    def wrapped_view(*args, **kwargs):
+        if session.get("role_name") not in ("Admin", "Manager"):
+            logger.info("Unauthorized access: Admin or Manager role required.")
+            flash("Unauthorized access.", "error")
+            return redirect("/")
+        return view(*args, **kwargs)
 
     return wrapped_view
 

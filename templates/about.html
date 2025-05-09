@@ -1,115 +1,127 @@
-{% extends 'base.html' %} {% block title %}About - Campus Scheduler{% endblock %} {% block content %}
-<section class="about-container">
-    <h1>About Campus Event & Task Scheduler</h1>
-    <p>
-        Welcome to Campus Event & Task Scheduler, your favourite platform for organizing campus events and managing
-        tasks
-    </p>
+{% extends 'base.html' %} {% block title %}About - Campus Scheduler{% endblock %}
+{% block content %}
+    <section class="about-container">
+        <h1>About Campus Event & Task Scheduler</h1>
+        <p>
+            Welcome to Campus Event & Task Scheduler, your favourite platform for organizing campus events and managing
+            tasks
+        </p>
 
-    <h2>Our Mission</h2>
-    <p>We look forward to being the best campus scheduler!</p>
+        <h2>Our Mission</h2>
+        <p>We look forward to being the best campus scheduler!</p>
 
-    <h2>Meet the Team</h2>
-    <div class="team-section">
-        <div class="team-member">
-            <img
-                src="{{ url_for('static', filename='images/team-member-1.jpg') }}"
-                alt="Team Member 1"
-                width="400"
-                height="400"
-                onerror="this.onerror=null; this.src='https://picsum.photos/seed/member1/400';" />
-            <h3>Illia Shust</h3>
+        <h2>Meet the Team</h2>
+        <div class="team-section">
+            <div class="team-member">
+                <img
+                    src="{{ url_for('static', filename='images/team-member-1.jpg') }}"
+                    alt="Team Member 1"
+                    width="400"
+                    height="400"
+                    onerror="this.onerror=null; this.src='https://picsum.photos/seed/member1/400';"
+                />
+                <h3>Illia Shust</h3>
+            </div>
+            <div class="team-member">
+                <img
+                    src="{{ url_for('static', filename='images/team-member-2.jpg') }}"
+                    alt="Team Member 2"
+                    width="400"
+                    height="400"
+                    onerror="this.onerror=null; this.src='https://picsum.photos/seed/member2/400';"
+                />
+                <h3>Cristofer Pablo</h3>
+            </div>
+            <div class="team-member">
+                <img
+                    src="{{ url_for('static', filename='images/team-member-3.jpg') }}"
+                    alt="Team Member 3"
+                    width="400"
+                    height="400"
+                    onerror="this.onerror=null; this.src='https://picsum.photos/seed/member3/400';"
+                />
+                <h3>Bogdan Cprljakovic</h3>
+            </div>
+            <div class="team-member">
+                <img
+                    src="{{ url_for('static', filename='images/team-member-4.jpg') }}"
+                    alt="Team Member 4"
+                    width="400"
+                    height="400"
+                    onerror="this.onerror=null; this.src='https://picsum.photos/seed/member4/400';"
+                />
+                <h3>Alex Serg</h3>
+            </div>
+            <div class="team-member">
+                <img
+                    src="{{ url_for('static', filename='images/team-member-5.jpg') }}"
+                    alt="Team Member 5"
+                    width="400"
+                    height="400"
+                    onerror="this.onerror=null; this.src='https://picsum.photos/seed/member5/400';"
+                />
+                <h3>Zeynep Yurtsever</h3>
+            </div>
+            <div class="team-member">
+                <img
+                    src="{{ url_for('static', filename='images/team-member-6.jpg') }}"
+                    alt="Team Member 6"
+                    width="400"
+                    height="400"
+                    onerror="this.onerror=null; this.src='https://picsum.photos/seed/member6/400';"
+                />
+                <h3>Alim Togayev</h3>
+            </div>
+            <div class="team-member">
+                <img
+                    src="{{ url_for('static', filename='images/team-member-7.jpg') }}"
+                    alt="Team Member 7"
+                    width="400"
+                    height="400"
+                    onerror="this.onerror=null; this.src='https://picsum.photos/seed/member7/400';"
+                />
+                <h3>Azimjon Akhmadjonov</h3>
+            </div>
+            <div class="team-member">
+                <img
+                    src="{{ url_for('static', filename='images/team-member-8.jpg') }}"
+                    alt="Team Member 8"
+                    width="400"
+                    height="400"
+                    onerror="this.onerror=null; this.src='https://picsum.photos/seed/member8/400';"
+                />
+                <h3>Hamid</h3>
+            </div>
+            <div class="team-member">
+                <img
+                    src="{{ url_for('static', filename='images/team-member-9.jpg') }}"
+                    alt="Team Member 9"
+                    width="400"
+                    height="400"
+                    onerror="this.onerror=null; this.src='https://picsum.photos/seed/member9/400';"
+                />
+                <h3>Kinlo ET</h3>
+            </div>
+            <div class="team-member">
+                <img
+                    src="{{ url_for('static', filename='images/team-member-10.jpg') }}"
+                    alt="Team Member 10"
+                    width="400"
+                    height="400"
+                    onerror="this.onerror=null; this.src='https://picsum.photos/seed/member10/400';"
+                />
+                <h3>Ben</h3>
+            </div>
+            <div class="team-member">
+                <img
+                    src="{{ url_for('static', filename='images/team-member-11.jpg') }}"
+                    alt="Team Member 11"
+                    width="400"
+                    height="400"
+                    onerror="this.onerror=null; this.src='https://picsum.photos/seed/member11/400';"
+                />
+                <h3>Andrei Valean</h3>
+            </div>
         </div>
-        <div class="team-member">
-            <img
-                src="{{ url_for('static', filename='images/team-member-2.jpg') }}"
-                alt="Team Member 2"
-                width="400"
-                height="400"
-                onerror="this.onerror=null; this.src='https://picsum.photos/seed/member2/400';" />
-            <h3>Cristofer Pablo</h3>
-        </div>
-        <div class="team-member">
-            <img
-                src="{{ url_for('static', filename='images/team-member-3.jpg') }}"
-                alt="Team Member 3"
-                width="400"
-                height="400"
-                onerror="this.onerror=null; this.src='https://picsum.photos/seed/member3/400';" />
-            <h3>Bogdan Cprljakovic</h3>
-        </div>
-        <div class="team-member">
-            <img
-                src="{{ url_for('static', filename='images/team-member-4.jpg') }}"
-                alt="Team Member 4"
-                width="400"
-                height="400"
-                onerror="this.onerror=null; this.src='https://picsum.photos/seed/member4/400';" />
-            <h3>Alex Serg</h3>
-        </div>
-        <div class="team-member">
-            <img
-                src="{{ url_for('static', filename='images/team-member-5.jpg') }}"
-                alt="Team Member 5"
-                width="400"
-                height="400"
-                onerror="this.onerror=null; this.src='https://picsum.photos/seed/member5/400';" />
-            <h3>Zeynep Yurtsever</h3>
-        </div>
-        <div class="team-member">
-            <img
-                src="{{ url_for('static', filename='images/team-member-6.jpg') }}"
-                alt="Team Member 6"
-                width="400"
-                height="400"
-                onerror="this.onerror=null; this.src='https://picsum.photos/seed/member6/400';" />
-            <h3>Alim Togayev</h3>
-        </div>
-        <div class="team-member">
-            <img
-                src="{{ url_for('static', filename='images/team-member-7.jpg') }}"
-                alt="Team Member 7"
-                width="400"
-                height="400"
-                onerror="this.onerror=null; this.src='https://picsum.photos/seed/member7/400';" />
-            <h3>Azimjon Akhmadjonov</h3>
-        </div>
-        <div class="team-member">
-            <img
-                src="{{ url_for('static', filename='images/team-member-8.jpg') }}"
-                alt="Team Member 8"
-                width="400"
-                height="400"
-                onerror="this.onerror=null; this.src='https://picsum.photos/seed/member8/400';" />
-            <h3>Hamid</h3>
-        </div>
-        <div class="team-member">
-            <img
-                src="{{ url_for('static', filename='images/team-member-9.jpg') }}"
-                alt="Team Member 9"
-                width="400"
-                height="400"
-                onerror="this.onerror=null; this.src='https://picsum.photos/seed/member9/400';" />
-            <h3>Kinlo ET</h3>
-        </div>
-        <div class="team-member">
-            <img
-                src="{{ url_for('static', filename='images/team-member-10.jpg') }}"
-                alt="Team Member 10"
-                width="400"
-                height="400"
-                onerror="this.onerror=null; this.src='https://picsum.photos/seed/member10/400';" />
-            <h3>Ben</h3>
-        </div>
-        <div class="team-member">
-            <img
-                src="{{ url_for('static', filename='images/team-member-11.jpg') }}"
-                alt="Team Member 11"
-                width="400"
-                height="400"
-                onerror="this.onerror=null; this.src='https://picsum.photos/seed/member11/400';" />
-            <h3>Andrei Valean</h3>
-        </div>
-    </div>
-</section>
+    </section>
 {% endblock %}

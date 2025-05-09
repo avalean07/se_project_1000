@@ -1,77 +1,20 @@
-{% extends "base.html" %} {% block title %}Home - Campus Scheduler{% endblock %} {% block content %}
-
-<section class="hero">
-    <h1>{% if user %} Welcome, {{user}} {% else %}Welcome {% endif %} to Campus Event & Task Scheduler</h1>
-    <p>
-        Your all-in-one solution for managing campus events and project tasks seamlessly. Dive in to explore and
-        organize!
-    </p>
-    <div class="hero-features">
-        <span><i class="fas fa-tasks"></i> Task Management</span>
-        <span><i class="fas fa-calendar-alt"></i> Event Scheduling</span>
-        <span><i class="fas fa-project-diagram"></i> Project Tracking</span>
-        <span><i class="fas fa-check-circle"></i> Approval Workflows</span>
-    </div>
-    <a href="{{ url_for('projects') }}" class="btn btn-primary">
-        <i class="fas fa-arrow-right"></i> Explore Projects
-    </a>
-</section>
-
-
-<!-- FAQ section -->
-<section class="faq">
-    <h2>Frequently Asked Questions</h2>
-  
-    <button class="accordion">What is Campus Scheduler?</button>
-    <div class="panel">
-      <p>
-        Campus Scheduler is your all-in-one solution for managing everyday campus activities. With it, you can
-        schedule appointments with professors, supervisors, colleagues, and more. It provides a comprehensive
-        way to manage your time and stay up to date with your work by allowing you to receive or assign projects and tasks,
-        as well as leave comments on them.
-      </p>
-    </div>
-  
-    <button class="accordion">Why use our product?</button>
-    <div class="panel">
-      <p>
-        Our product empowers users to manage their time more efficiently than ever before. Campus Scheduler offers
-        exceptional flexibility for organizing meetings, activities, and projects with just a few simple interactions.
-      </p>
-    </div>
-  
-    <button class="accordion">Can I schedule meetings inside Campus Scheduler?</button>
-    <div class="panel">
-      <p>
-        Yes! Campus Scheduler allows you—or your supervisor—to schedule appointments and meetings with ease.
-      </p>
-    </div>
-  
-    <button class="accordion">Can I set deadlines for my employees?</button>
-    <div class="panel">
-      <p>
-        Yes! Campus Scheduler enables project managers to set deadlines for their employees. Everyone can view
-        these deadlines on the shared calendar and see how much time remains before they are due.
-      </p>
-    </div>
-  </section>
-  
-  <script>
-    var acc = document.getElementsByClassName("accordion");
-  
-    for (var i = 0; i < acc.length; i++) {
-      acc[i].addEventListener("click", function () {
-        this.classList.toggle("active");
-  
-        var panel = this.nextElementSibling;
-  
-        if (panel.style.maxHeight) {
-          panel.style.maxHeight = null;
-        } else {
-          panel.style.maxHeight = panel.scrollHeight + "px";
-        }
-      });
-    }
-  </script>
-  
+{% extends "base.html" %}
+{% block title %}Home - Campus Scheduler{% endblock %}
+{% block content %}
+    <section class="hero">
+        <h1>{% if user %}Welcome, {{ user }}{% else %}Welcome{% endif %} to Campus Event & Task Scheduler</h1>
+        <p>
+            Your all-in-one solution for managing campus events and project tasks seamlessly. Dive in to explore and
+            organize!
+        </p>
+        <div class="hero-features">
+            <span><i class="fas fa-tasks"></i> Task Management</span>
+            <span><i class="fas fa-calendar-alt"></i> Event Scheduling</span>
+            <span><i class="fas fa-project-diagram"></i> Project Tracking</span>
+            <span><i class="fas fa-check-circle"></i> Approval Workflows</span>
+        </div>
+        <a href="{{ url_for('projects') }}" class="btn btn-primary">
+            <i class="fas fa-arrow-right"></i> Explore Projects
+        </a>
+    </section>
 {% endblock %}

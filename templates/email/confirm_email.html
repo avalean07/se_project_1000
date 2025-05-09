@@ -1,86 +1,86 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
+    <head>
+        <meta charset="UTF-8" />
+        <title>Password Reset Request</title>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&display=swap"
+            rel="stylesheet"
+        />
+        <meta property="og:title" content="Campus Scheduler" />
+        <meta property="og:description" content="Create and manage your events and tasks easily." />
+        <meta property="og:image" content="https://preginex.fun/static/images/favicon.ico" />
+        <meta property="og:url" content="https://preginex.fun" />
+        <meta property="og:type" content="website" />
+        <meta name="author" content="awerks" />
+        <style>
+            body {
+                background-color: #f4f4f4;
+                font-family: "Montserrat", sans-serif;
+                margin: 0;
+                padding: 20px;
+            }
 
-<head>
-    <meta charset="UTF-8">
-    <title>Password Reset Request</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&display=swap" rel="stylesheet">
-    <meta property="og:title" content="Campus Scheduler">
-    <meta property="og:description" content="Create and manage your events and tasks easily.">
-    <meta property="og:image" content="https://preginex.fun/static/images/favicon.ico">
-    <meta property="og:url" content="https://preginex.fun">
-    <meta property="og:type" content="website">
-    <meta name="author" content="awerks">
-    <style>
-        body {
-            background-color: #f4f4f4;
-            font-family: 'Montserrat', sans-serif;
-            margin: 0;
-            padding: 20px;
-        }
+            .container {
+                max-width: 450px;
+                margin: 0 auto;
+                background-color: #ffffff;
+                padding: 30px;
+                border-radius: 8px;
+                box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            }
 
-        .container {
-            max-width: 450px;
-            margin: 0 auto;
-            background-color: #ffffff;
-            padding: 30px;
-            border-radius: 8px;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-        }
+            h1 {
+                color: #6200ee;
+                font-size: 24px;
+                text-align: center;
+                margin-bottom: 20px;
+            }
 
-        h1 {
-            color: #6200ee;
-            font-size: 24px;
-            text-align: center;
-            margin-bottom: 20px;
-        }
+            p {
+                color: #333333;
+                font-size: 16px;
+                line-height: 1.5;
+                margin: 10px 0;
+            }
 
-        p {
-            color: #333333;
-            font-size: 16px;
-            line-height: 1.5;
-            margin: 10px 0;
-        }
+            .button {
+                display: inline-block;
+                padding: 12px 20px;
+                margin-top: 20px;
+                margin-bottom: 20px;
+                background-color: #6200ee !important;
+                color: #ffffff !important;
+                text-decoration: none !important;
+                border-radius: 4px;
+                font-size: 16px;
+                text-align: center;
+            }
 
-        .button {
-            display: inline-block;
-            padding: 12px 20px;
-            margin-top: 20px;
-            margin-bottom: 20px;
-            background-color: #6200ee !important;
-            color: #ffffff !important;
-            text-decoration: none !important;
-            border-radius: 4px;
-            font-size: 16px;
-            text-align: center;
-        }
+            .footer {
+                font-size: 12px;
+                color: #777777;
+                text-align: left;
+                margin-top: 30px;
+            }
+        </style>
+    </head>
 
-        .footer {
-            font-size: 12px;
-            color: #777777;
-            text-align: left;
-            margin-top: 30px;
-        }
-    </style>
-</head>
-
-<body>
-    <div class="container">
-        <h1>Welcome!</h1>
-        <p>Hello,</p>
-        <p>Click the link below to confirm your email address:</p>
-        <p style="text-align: center;">
-            <a href="{{ confirm_link }}" class="button">Confirm Email</a>
-        </p>
-        <p>If you didn't create an account, ignore this email.</p>
-        <p>Thank you,<br>Campus Scheduler</p>
-        <div class="footer">
-            <p>This email has been generated automatically. Please do not reply.</p>
+    <body>
+        <div class="container">
+            <h1>Welcome!</h1>
+            <p>Hello,</p>
+            <p>Click the link below to confirm your email address:</p>
+            <p style="text-align: center;">
+                <a href="{{ confirm_link }}" class="button">Confirm Email</a>
+            </p>
+            <p>If you didn't create an account, ignore this email.</p>
+            <p>Thank you,<br />Campus Scheduler</p>
+            <div class="footer">
+                <p>This email has been generated automatically. Please do not reply.</p>
+            </div>
         </div>
-        
-    </div>
-</body>
-
+    </body>
 </html>

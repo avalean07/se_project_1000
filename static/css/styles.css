@@ -75,6 +75,8 @@ main.container {
     color: #fff;
     font-size: 1.5rem;
     cursor: pointer;
+    border: 0;
+    background: none;
 }
 
 
@@ -88,7 +90,9 @@ main.container {
 }
 
 
-#calendar {
+#eventCalendar,
+#eventCalendar,
+#projectGraph {
     margin-top: 2rem;
 }
 
@@ -325,6 +329,11 @@ footer {
     display: none;
 }
 
+#taskCalendar,
+#eventCalendar {
+    min-height: 700px;
+}
+
 .fc-event-title {
     font-weight: bold;
     font-size: 1em;
@@ -396,16 +405,15 @@ footer {
 
     .nav-menu {
         position: fixed;
-        top: 60px;
+        top: 69px;
         left: 0;
         width: 100%;
-        font-size: 1.5rem;
-        height: calc(100% - 60px);
+        font-size: 1.75rem;
+        height: 100%;
         background-color: #6200ee;
         padding-top: 2rem;
         display: flex;
         flex-direction: column;
-
         gap: 1rem;
         z-index: 1000;
         transform: translateX(100%);
@@ -423,7 +431,7 @@ footer {
     }
 
     .nav-link i {
-        display: none !important;
+        display: none;
     }
 
     #profile-dropdown {
@@ -527,6 +535,24 @@ footer {
 
 .btn-primary:hover {
     background-color: #4e00bb;
+}
+
+.btn-success {
+    background-color: #28a745;
+    color: #fff;
+}
+
+.btn-success:hover {
+    background-color: #218838;
+}
+
+.btn-danger {
+    color: #fff;
+    background-color: #dc3545;
+}
+
+.btn-danger:hover {
+    background-color: #c82333;
 }
 
 .btn:disabled {
@@ -740,6 +766,11 @@ h2 {
     color: #6200ee;
 }
 
+td.editable {
+    background-color: #f0f8ff;
+    outline: 1px solid #6200ee;
+}
+
 .projects-table {
     width: 100%;
     border-collapse: collapse;
@@ -821,7 +852,6 @@ h2 {
     background-size: cover;
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    margin-top: 10px;
 }
 
 #resetLayoutBtn {
@@ -842,12 +872,17 @@ h2 {
 
 @media (max-width: 768px) {
     #projectGraph {
-        height: 400px;
+        max-height: 350px;
     }
 
-    canvas {
-        touch-action: revert !important;
+    #eventCalendar,
+    #taskCalendar {
+        min-height: 200px;
     }
+
+    /* canvas {
+        touch-action: revert !important;
+    } */
 }
 
 .title {

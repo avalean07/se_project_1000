@@ -1,5 +1,3 @@
-
-
 CREATE TYPE role_enum AS ENUM ('Admin', 'Manager', 'Worker');
 
 
@@ -10,9 +8,9 @@ CREATE TABLE IF NOT EXISTS users (
     role_name role_enum NOT NULL,
     first_name VARCHAR(50) NOT NULL,
     second_name VARCHAR(50),
-    birthday_date DATE, 
+    birthday_date DATE,
     email VARCHAR(100) UNIQUE NOT NULL,
-    confirmed BOOLEAN DEFAULT FALSE,
+    confirmed BOOLEAN DEFAULT FALSE 
 );
 
 CREATE TABLE IF NOT EXISTS projects(
@@ -21,8 +19,8 @@ CREATE TABLE IF NOT EXISTS projects(
     description TEXT,
     start_date DATE NOT NULL,
     end_date DATE,
-    manager_id INTEGER NOT NULL,  -- Project Manager (or Team Lead)
-    FOREIGN KEY (manager_id) REFERENCES users(user_id)
+    manager_id INTEGER NOT NULL,  -- project manager (or team lead)
+    FOREIGN KEY (manager_id) REFERENCES users(user_id) ON UPDATE CASCADE ON DELETE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS tasks(
@@ -32,24 +30,24 @@ CREATE TABLE IF NOT EXISTS tasks(
     deadline DATE,
     status VARCHAR(50) DEFAULT 'Pending', -- 'Pending', 'In Progress', 'Completed'
     project_id INTEGER NOT NULL,
-    assigned_to INTEGER NOT NULL,  -- Worker/Employee assigned to this task
+    assigned_to INTEGER NOT NULL,  -- worker/employee assigned to this task
     normal_duration INTEGER DEFAULT 0,
     crash_duration INTEGER DEFAULT 0,
     crash_cost INTEGER DEFAULT 0,
     normal_cost INTEGER DEFAULT 0,
-    FOREIGN KEY (project_id) REFERENCES projects(project_id),
-    FOREIGN KEY (assigned_to) REFERENCES users(user_id)
+    FOREIGN KEY (project_id) REFERENCES projects(project_id) ON UPDATE CASCADE ON DELETE CASCADE,
+    FOREIGN KEY (assigned_to) REFERENCES users(user_id) ON UPDATE CASCADE ON DELETE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS events(
-    event_id SERIAL PRIMARY KEY,    
+    event_id SERIAL PRIMARY KEY,
     event_name VARCHAR(100) NOT NULL,
     event_description TEXT,
     event_date DATE NOT NULL,
-    requested_by INTEGER NOT NULL,  -- User who requests the event booking
-    approved_by INTEGER,            -- Manager/Admin who approves it
-    FOREIGN KEY (requested_by) REFERENCES users(user_id),
-    FOREIGN KEY (approved_by) REFERENCES users(user_id)
+    requested_by INTEGER NOT NULL,  
+    approved_by INTEGER,           
+    FOREIGN KEY (requested_by) REFERENCES users(user_id) ON UPDATE CASCADE ON DELETE CASCADE,
+    FOREIGN KEY (approved_by) REFERENCES users(user_id) ON UPDATE CASCADE ON DELETE SET NULL -- 
 );
 
 CREATE TABLE IF NOT EXISTS schedules(
@@ -59,13 +57,14 @@ CREATE TABLE IF NOT EXISTS schedules(
     project_id INTEGER,
     schedule_date DATE NOT NULL,
     description TEXT,
-    FOREIGN KEY (user_id) REFERENCES users(user_id),
-    FOREIGN KEY (event_id) REFERENCES events(event_id),
-    FOREIGN KEY (project_id) REFERENCES projects(project_id)
+    FOREIGN KEY (user_id) REFERENCES users(user_id) ON UPDATE CASCADE ON DELETE CASCADE,
+    FOREIGN KEY (event_id) REFERENCES events(event_id) ON UPDATE CASCADE ON DELETE CASCADE,
+    FOREIGN KEY (project_id) REFERENCES projects(project_id) ON UPDATE CASCADE ON DELETE CASCADE
 );
+
 CREATE TABLE IF NOT EXISTS reset_confirm_tokens (
     token VARCHAR(36) PRIMARY KEY,
-    user_id INTEGER REFERENCES users(user_id),
+    user_id INTEGER REFERENCES users(user_id) ON UPDATE CASCADE ON DELETE CASCADE,
     expires_at TIMESTAMP NOT NULL,
     used BOOLEAN DEFAULT FALSE
 );

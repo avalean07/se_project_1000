@@ -1,211 +1,95 @@
 {% extends "base.html" %}
+{% block title %}Project Charter{% endblock %}
+
+{% block extra_head %}
+    <script src="https://cdn.jsdelivr.net/npm/vis-network@9.1.2/standalone/umd/vis-network.min.js" defer></script>
+{% endblock %}
 
 {% block content %}
-<h1 class="title" style="margin-bottom: 1.5rem;">Projects and Tasks Graph</h1>
+    <h1 class="title" style="margin-bottom: 1.5rem;">Projects and Tasks Graph</h1>
 
-<div class="legend">
-    <span class="legend-item">
-        <span class="legend-color legend-project"></span>
-        Project
-    </span>
-    <span class="legend-item">
-        <span class="legend-color legend-pending"></span>
-        Pending Task
-    </span>
-    <span class="legend-item">
-        <span class="legend-color legend-completed"></span>
-        Completed Task
-    </span>
-</div>
-
-<div id="projectGraph"></div>
-<div style="text-align: center; margin-top: 1rem;">
-    <button id="resetLayoutBtn">Reset Layout</button>
-</div>
-
-
-<script src="https://cdn.jsdelivr.net/npm/vis-network@9.1.2/standalone/umd/vis-network.min.js"></script>
-
-<script>
-    function htmlTitle(html) {
-        const container = document.createElement("div");
-        container.style.fontFamily = window.getComputedStyle(document.body).fontFamily;
-        container.innerHTML = html;
-        return container;
-    }
-
-    document.addEventListener("DOMContentLoaded", function () {
-        fetch("{{ url_for('get_projects') }}")
-            .then(response => response.json())
-            .then(data => {
-                let nodes = [];
-                let edges = [];
-
-                data.forEach(project => {
-                    if (!project.tasks || project.tasks.length === 0) {
-                        return;
-                    }
-                    let projectId = "p" + project.project_id;
-                    nodes.push({
-                        id: projectId,
-                        label: project.project_name,
-                        title: htmlTitle("<span style='color: #e91e63;'><i class='fas fa-info-circle'></i> Project Description: " + project.description + "</span><br>" +
-                            "<span style='color: #3f51b5;'><i class='fas fa-calendar-alt'></i> Start: " + project.start + "</span><br>" +
-                            "<span style='color: #4caf50;'><i class='fas fa-calendar-check'></i> End: " + project.end + "</span><br>" +
-                            "<span style='color: black;'><i class='fas fa-user'></i> Manager: " + project.manager + "</span>"),
-                        //title: "Project Description: " + project.description + "\nStart: " + project.start + "\nEnd: " + project.end + "\nManager: " + project.manager,
-                        shape: "box",
-                        color: "#6200ee",
-                        font: { color: "#ffffff", size: 16 },
-                        borderWidth: 2,
-                        margin: 10
-                    });
-
-                    project.tasks.forEach(task => {
-                        let taskId = "t" + task.task_id;
-                        nodes.push({
-                            id: taskId,
-                            label: task.task_name,
-                            title: htmlTitle("<span style='color: #e91e63;'><i class='fas fa-info-circle'></i> Task Description: " + task.description + "</span><br>" +
-                                "<span style='color: #3f51b5;'><i class='fas fa-calendar-alt'></i> Deadline: " + task.end + "</span><br>" +
-                                "<span style='color: " + (task.status === "Completed" ? "#4caf50" : task.status === "Pending" ? "#ff9800" : "#2196f3") + ";'><i class='fas fa-check'></i> Status: " + task.status + "</span>"),
-                            shape: "ellipse",
-                            color: task.status === "Completed" ? "#4caf50" :
-                                task.status === "Pending" ? "#ff9800" : "#2196f3",
-                            font: { color: "#ffffff", size: 14 },
-                            borderWidth: 1
-                        });
-                        edges.push({
-                            from: projectId,
-                            to: taskId,
-                            arrows: "to",
-                            color: { color: "#848484" },
-                            smooth: { enabled: true, type: "cubicBezier", roundness: 0.5 }
-                        });
-                    });
-                });
-
-                let container = document.getElementById("projectGraph");
-                let visData = {
-                    nodes: new vis.DataSet(nodes),
-                    edges: new vis.DataSet(edges)
-                };
-
-                let options = {
-                    layout: {
-                        improvedLayout: true
-                    },
-                    physics: {
-                        enabled: true,
-                        solver: "forceAtlas2Based",
-                        forceAtlas2Based: {
-                            gravitationalConstant: -50,
-                            centralGravity: 0.02,
-                            springConstant: 0.02,
-                            springLength: 40,
-                            damping: 0.8,
-                            avoidOverlap: 0.5
-                        },
-                        maxVelocity: 50,
-                        minVelocity: 0.75,
-                        timestep: 0.35
-                    },
-                    interaction: {
-                        hover: true,
-                        zoomView: false,
-                        dragView: false
-                    },
-                    edges: {
-                        smooth: {
-                            type: "cubicBezier",
-                            forceDirection: "horizontal",
-                            roundness: 0.4
-                        }
-                    }
-                };
-                // let options = { physics: { enabled: true }, interaction: { hover: true, zoomView: false, dragView: false } };
-
-                let network = new vis.Network(container, visData, options);
-
-                document.getElementById("resetLayoutBtn").addEventListener("click", function () {
-                    network.fit({
-                        animation: {
-                            duration: 800,
-                            easingFunction: "easeInOutQuad"
-                        }
-                    });
-                });
-
-
-            })
-            .catch(error => console.error("Error fetching project data:", error));
-    });
-</script>
-
-{% if projects %}
-<h2>Current Projects</h2>
-<div class="table-responsive">
-
-    <table class="projects-table">
-        <thead>
-            <tr>
-                <th>Project Name</th>
-                <th>Description</th>
-                <th>Start Date</th>
-                <th>End Date</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for project in projects %}
-            <tr>
-                <td>{{ project.project_name }}</td>
-                <td>{{ project.description }}</td>
-                <td>{{ project.start_date }}</td>
-                <td>{{ project.end_date }}</td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
-</div>
-{% endif %}
-
-<h2>Create Project (Project Charter)</h2>
-
-<form method="POST" action="{{ url_for('create_project') }}" class="project-form">
-    <div class="form-group">
-        <label for="project_name">Project Name:</label>
-        <input type="text" id="project_name" name="project_name" required>
+    <div class="legend">
+        <span class="legend-item">
+            <span class="legend-color legend-project"></span>
+            Project
+        </span>
+        <span class="legend-item">
+            <span class="legend-color legend-pending"></span>
+            Pending Task
+        </span>
+        <span class="legend-item">
+            <span class="legend-color legend-completed"></span>
+            Completed Task
+        </span>
     </div>
-    <div class="form-group">
-        <label for="description">Description:</label>
-        <textarea id="description" name="description"></textarea>
-    </div>
-    <div class="form-group">
-        <label for="start_date">Start Date:</label>
-        <input type="date" id="start_date" name="start_date" required>
-    </div>
-    <div class="form-group">
-        <label for="end_date">End Date:</label>
-        <input type="date" id="end_date" name="end_date" required>
-    </div>
-    <button type="submit" class="btn btn-primary">Create Project</button>
-</form>
-<script>
-    document.querySelector('.project-form').addEventListener('submit', function (event) {
-        var startDate = new Date(document.getElementById('start_date').value);
-        var endDate = new Date(document.getElementById('end_date').value);
-        if (startDate > endDate) {
-            event.preventDefault();
-            alert('End date must be after start date.');
-        }
-    });
-</script>
 
-{% with messages = get_flashed_messages() %}
-{% if messages %}
-{% for message in messages %}
-<script>alert("{{ message }}")</script>
-{% endfor %}
-{% endif %}
-{% endwith %}
+    <div id="projectGraph"></div>
+    <div style="text-align: center; margin-top: 1rem;">
+        <button id="resetLayoutBtn">Reset Layout</button>
+    </div>
+
+    {% if projects %}
+        <h2>Current Projects</h2>
+        <div class="table-responsive">
+            <table class="projects-table">
+                <thead>
+                    <tr>
+                        <th>Project Name</th>
+                        <th>Description</th>
+                        <th>Start Date</th>
+                        <th>End Date</th>
+                        <th>Edit</th>
+                        <th>Delete</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for project in projects %}
+                        <tr data-project-id="{{ project.project_id }}">
+                            <td>{{ project.project_name }}</td>
+                            <td>{{ project.description }}</td>
+                            <td>{{ project.start_date }}</td>
+                            <td>{{ project.end_date }}</td>
+                            <td>
+                                <button class="btn btn-neutral">Edit</button>
+                            </td>
+                            <td>
+                                <button type="submit" class="btn btn-danger">Delete</button>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    {% endif %}
+
+    <h2>Create Project (Project Charter)</h2>
+
+    <form method="POST" action="{{ url_for('create_project') }}" class="project-form">
+        <div class="form-group">
+            <label for="project_name">Project Name:</label>
+            <input type="text" id="project_name" name="project_name" required minlength="2" maxlength="60" />
+        </div>
+        <div class="form-group">
+            <label for="description">Description:</label>
+            <textarea id="description" name="description" minlength="2" required maxlength="512"></textarea>
+        </div>
+        <div class="form-group">
+            <label for="start_date">Start Date:</label>
+            <input type="date" id="start_date" name="start_date" required />
+        </div>
+        <div class="form-group">
+            <label for="end_date">End Date:</label>
+            <input type="date" id="end_date" name="end_date" required />
+        </div>
+        <button type="submit" class="btn btn-primary">Create Project</button>
+    </form>
+{% endblock %}
+
+{% block extra_js %}
+    <script>
+        const PROJECTS_URL = "{{ url_for('get_projects') }}";
+        const EDIT_PROJECT_URL = "{{ url_for('edit_project') }}";
+        const DELETE_PROJECT_URL = "{{ url_for('delete_project') }}";
+    </script>
+    <script src="{{ url_for('static', filename='js/project.js') }}" type="module"></script>
 {% endblock %}

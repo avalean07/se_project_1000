@@ -1,0 +1,11 @@
+{%- macro link(label, endpoint, icon, extra_classes='') -%}
+    {%-
+        set active = 'active' if request.endpoint == endpoint
+        else ''
+    -%}
+    <li class="nav-item">
+        <a href="{{ url_for(endpoint) }}" class="nav-link {{ active }} {{ extra_classes }}">
+            <i class="{{ icon }}"></i> {{ label }}
+        </a>
+    </li>
+{%- endmacro -%}

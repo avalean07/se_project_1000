@@ -64,20 +64,20 @@ Table "reset_confirm_tokens" {
   "used" bool [default: false]
 }
 
-Ref "events_approved_by_fkey":"users"."user_id" < "events"."approved_by"
+Ref "events_approved_by_fkey":"users"."user_id" < "events"."approved_by" [update: cascade, delete: cascade]
 
-Ref "events_requested_by_fkey":"users"."user_id" < "events"."requested_by"
+Ref "events_requested_by_fkey":"users"."user_id" < "events"."requested_by" [update: cascade, delete: cascade]
 
-Ref "projects_manager_id_fkey":"users"."user_id" < "projects"."manager_id"
+Ref "projects_manager_id_fkey":"users"."user_id" < "projects"."manager_id" [update: cascade, delete: cascade]
 
-Ref "password_reset_tokens_user_id_fkey":"users"."user_id" < "reset_confirm_tokens"."user_id"
+Ref "reset_confirm_tokens_user_id_fkey":"users"."user_id" < "reset_confirm_tokens"."user_id" [update: cascade, delete: cascade]
 
-Ref "schedules_event_id_fkey":"events"."event_id" < "schedules"."event_id"
+Ref "schedules_event_id_fkey":"events"."event_id" < "schedules"."event_id" [update: cascade, delete: cascade]
 
-Ref "schedules_project_id_fkey":"projects"."project_id" < "schedules"."project_id"
+Ref "schedules_project_id_fkey":"projects"."project_id" < "schedules"."project_id" [update: cascade, delete: cascade]
 
-Ref "schedules_user_id_fkey":"users"."user_id" < "schedules"."user_id"
+Ref "schedules_user_id_fkey":"users"."user_id" < "schedules"."user_id" [update: cascade, delete: cascade]
 
-Ref "tasks_assigned_to_fkey":"users"."user_id" < "tasks"."assigned_to"
+Ref "tasks_assigned_to_fkey":"users"."user_id" < "tasks"."assigned_to" [update: cascade, delete: cascade]
 
-Ref "tasks_project_id_fkey":"projects"."project_id" < "tasks"."project_id"
+Ref "tasks_project_id_fkey":"projects"."project_id" < "tasks"."project_id" [update: cascade, delete: cascade]

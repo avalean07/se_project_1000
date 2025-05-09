@@ -3,68 +3,62 @@
 
 {% block content %}
 
-{% if success %}
+    {% if success %}
+        <div class="login-container" style="max-width: 600px;">
+            <h2 style="color: #6200ee;"><i class="fas fa-check-circle" style="margin-right: 8px;"></i>Success</h2>
+            <p style="font-size: 1.25rem; margin: 1.5rem 0; color: #28a745;">
+                Your email has been confirmed successfully.
+            </p>
+            <a href="{{ url_for('index') }}" class="btn btn-primary">Home</a>
+        </div>
+    {% elif error_message %}
+        <div class="login-container" style="max-width: 600px;">
+            <h2 style="color: #6200ee;"><i class="fas fa-exclamation-circle" style="margin-right: 8px;"></i>Error</h2>
+            <p style="font-size: 1.25rem;">{{ error_message }}</p>
+        </div>
+    {% else %}
+        <div class="login-container" style="max-width: 600px;">
+            <h2 style="color: #6200ee;">
+                <i class="fas fa-envelope" style="margin-right: 8px;"></i>Confirm Your Email
+            </h2>
+            <p style="font-size: 1.25rem; margin: 1.5rem 0;">
+                Please check your email and click on the confirmation link to verify your email address.
+            </p>
+            <form method="POST" action="{{ url_for('auth.resend_confirmation') }}">
+                <button id="resendBtn" type="submit" class="btn btn-primary" onclick="disableButtonForCooldown()">
+                    Resend Confirmation Email
+                </button>
+            </form>
+        </div>
 
-<div class="login-container" style="max-width: 600px;">
-    <h2 style="color: #6200ee;">
-        <i class="fas fa-check-circle" style="margin-right: 8px;"></i>Success
-    </h2>
-    <p style="font-size: 1.25rem; margin: 1.5rem 0; color: #28a745;">Your email has been confirmed successfully.</p>
-    <a href="{{ url_for('index') }}" class="btn btn-primary">Home</a>
-</div>
-{% elif error_message %}
-<div class="login-container" style="max-width: 600px;">
-    <h2 style="color: #6200ee;">
-        <i class="fas fa-exclamation-circle" style="margin-right: 8px;"></i>Error
-    </h2>
-    <p style="font-size: 1.25rem;">{{ error_message }}</p>
-</div>
-{% else %}
-<div class="login-container" style="max-width: 600px;">
-    <h2 style="color: #6200ee;">
-        <i class="fas fa-envelope" style="margin-right: 8px;"></i>Confirm Your Email
-    </h2>
-    <p style="font-size: 1.25rem; margin: 1.5rem 0;">Please check your email and click on the confirmation link to
-        verify your email address.</p>
-    <form method="POST" action="{{ url_for('auth.resend_confirmation') }}">
-        <button id="resendBtn" type="submit" class="btn btn-primary" onclick="disableButtonForCooldown()">
-            Resend Confirmation Email
-        </button>
-    </form>
+        <script>
+            function checkConfirmation() {
+                fetch("{{ url_for('auth.check_confirmation') }}")
+                    .then((response) => response.json())
+                    .then((data) => {
+                        if (data.success) {
+                            window.location.href = "{{ url_for('index') }}";
+                        }
+                    })
+                    .catch((error) => console.error("Error:", error));
+            }
+            function disableButtonForCooldown() {
+                const resendBtn = document.getElementById("resendBtn");
+                resendBtn.disabled = true;
+                resendBtn.textContent = "Please wait...";
 
-
-</div>
-
-<script>
-    function checkConfirmation() {
-        fetch("{{ url_for('auth.check_confirmation') }}")
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    window.location.href = "{{ url_for('index') }}";
+                const cooldownMs = 5 * 60 * 1000;
+                setTimeout(() => {
+                    resendBtn.disabled = false;
+                    resendBtn.textContent = "Resend Confirmation Email";
+                }, cooldownMs);
+            }
+            setInterval(checkConfirmation, 5000);
+            document.addEventListener("visibilitychange", function () {
+                if (document.visibilityState === "visible") {
+                    checkConfirmation();
                 }
-            })
-            .catch(error => console.error('Error:', error));
-    }
-    function disableButtonForCooldown() {
-        const resendBtn = document.getElementById('resendBtn');
-        resendBtn.disabled = true;
-        resendBtn.textContent = 'Please wait...';
-
-        const cooldownMs = 5 * 60 * 1000;
-        setTimeout(() => {
-            resendBtn.disabled = false;
-            resendBtn.textContent = 'Resend Confirmation Email';
-        }, cooldownMs);
-    }
-    setInterval(checkConfirmation, 5000);
-    document.addEventListener("visibilitychange", function () {
-        if (document.visibilityState === "visible") {
-            checkConfirmation();
-        }
-    });
-
-</script>
-{% endif %}
-
+            });
+        </script>
+    {% endif %}
 {% endblock %}

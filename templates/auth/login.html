@@ -2,38 +2,37 @@
 {% block title %}Login{% endblock %}
 
 {% block content %}
-<div class="login-container">
-    <h2>Login</h2>
-    <form method="POST" action="{{ url_for('auth.login') }}">
-        <div class="form-group">
-            <label for="username">Username or Email</label>
-            <input type="text" id="username" name="username" required placeholder="Enter your username or email">
-        </div>
-        <div class="form-group">
-            <label for="password">Password</label>
-            <input type="password" id="password" name="password" required placeholder="Enter your password">
-        </div>
-        {% if error %}
-        <p style="color: red; margin-bottom: 1rem;">{{ error }}</p>
-        {% elif message %}
-        <p style="color: green; margin-bottom: 1rem;">{{ message }}</p>
-        {% endif %}
-        <div class="form-actions">
-            <button type="submit" class="btn btn-primary sign-in-btn">Sign In</button>
-            <a href="{{ url_for('auth.forgot_password') }}" class="forgot-link">
-                <span class="desktop-text">Forgot password</span>
-                <span class="mobile-text">Reset</span>
+    <div class="login-container">
+        <h2>Login</h2>
+        <form method="POST" action="{{ url_for('auth.login') }}">
+            <div class="form-group">
+                <label for="username">Username or Email</label>
+                <input type="text" id="username" name="username" required placeholder="Enter your username or email" />
+            </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" required placeholder="Enter your password" />
+            </div>
+            {% if error %}
+                <p style="color: red; margin-bottom: 1rem;">{{ error }}</p>
+            {% elif message %}
+                <p style="color: green; margin-bottom: 1rem;">{{ message }}</p>
+            {% endif %}
+            <div class="form-actions">
+                <button type="submit" class="btn btn-primary sign-in-btn">Sign In</button>
+                <a href="{{ url_for('auth.forgot_password') }}" class="forgot-link">
+                    <span class="desktop-text">Forgot password</span>
+                    <span class="mobile-text">Reset</span>
+                </a>
+            </div>
+        </form>
+
+        <hr />
+        <div class="google-login">
+            <p>Or sign in with:</p>
+            <a href="{{ url_for('google.login') }}" class="btn btn-google">
+                <i class="fab fa-google"></i> Sign in with Google
             </a>
-
         </div>
-    </form>
-
-    <hr>
-    <div class="google-login">
-        <p>Or sign in with:</p>
-        <a href="{{ url_for('google.login') }}" class="btn btn-google">
-            <i class="fab fa-google"></i> Sign in with Google
-        </a>
     </div>
-</div>
 {% endblock %}

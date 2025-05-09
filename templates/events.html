@@ -1,164 +1,44 @@
 {% extends "base.html" %}
+{% block title %}Campus Events{% endblock %}
+{% block extra_head %}
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.css" />
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.js" defer></script>
+    <script src="https://unpkg.com/@popperjs/core@2" defer></script>
+    <script src="https://unpkg.com/tippy.js@6" defer></script>
+{% endblock %}
+
 {% block content %}
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.css" />
-<script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.js"></script>
-<script src="https://unpkg.com/@popperjs/core@2"></script>
-<script src="https://unpkg.com/tippy.js@6"></script>
-<h1 class="title">Campus Events</h1>
+    <h1 class="title">Campus Events</h1>
 
+    <div id="eventCalendar"></div>
 
-<!-- {% if events %}
-<div class="table-responsive">
-    <table class="events-table">
-        <thead>
-            <tr>
-                <th>Name</th>
-                <th>Description</th>
-                <th>Date</th>
-                <th>Requested By</th>
-                <th>Approved By</th>
-                <th>Action</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for event in events %}
-            <tr>
-                <td>{{ event.event_name }}</td>
-                <td>{{ event.event_description }}</td>
-                <td>{{ event.event_date.strftime('%Y-%m-%d') }}</td>
-                <td>{{ event.requested_by_username }}</td>
-                <td>{{ event.approved_by_username if event.approved_by_username else '' }}</td>
-                <td>
-                    {% if not event.approved_by_username and session.get('role_name') in ['Admin','Manager'] %}
-                    <form method="POST" action="{{ url_for('approve_event', event_id=event.event_id) }}">
-                        <button type="submit" class="btn btn-primary">Approve</button>
-                    </form>
-                    {% endif %}
-                </td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
-</div>
+    <h2>Request a New Event</h2>
+    <form method="POST" action="{{ url_for('request_event') }}" class="event-form">
+        <div class="form-group">
+            <label for="event_name">Event Name:</label>
+            <input type="text" id="event_name" name="event_name" required min="2" max="60" />
+        </div>
 
-{% endif %} -->
+        <div class="form-group">
+            <label for="event_description">Description:</label>
+            <textarea id="event_description" name="event_description" required minlength="2" maxlength="512"></textarea>
+        </div>
 
-<div id="calendar"></div>
+        <div class="form-group">
+            <label for="event_date">Event Date:</label>
+            <input type="date" id="event_date" name="event_date" required />
+        </div>
 
-{% with messages = get_flashed_messages() %}
-{% if messages %}
-{% for message in messages %}
-<script>alert("{{ message }}")</script>
-{% endfor %}
-{% endif %}
-{% endwith %}
+        <button type="submit" class="btn btn-primary">Request New Event</button>
+    </form>
+{% endblock %}
 
-<!-- {% if session.get('role_name') == 'Worker' %} -->
-<h2>Request a New Event</h2>
-<form method="POST" action="{{ url_for('request_event') }}" class="event-form">
-    <div class="form-group">
-        <label for="event_name">Event Name:</label>
-        <input type="text" id="event_name" name="event_name" required>
-    </div>
-
-    <div class="form-group">
-        <label for="event_description">Description:</label>
-        <textarea id="event_description" name="event_description"></textarea>
-    </div>
-
-    <div class="form-group">
-        <label for="event_date">Event Date:</label>
-        <input type="date" id="event_date" name="event_date" required>
-    </div>
-
-    <button type="submit" class="btn btn-primary">Request New Event</button>
-</form>
-<!-- {% endif %} -->
-
-<script>
-    document.addEventListener('DOMContentLoaded', function () {
-        var calendarEl = document.getElementById('calendar');
-
-        var isMobile = window.innerWidth < 768;
-        var defaultView = isMobile ? 'listWeek' : 'dayGridMonth';
-
-        var headerConfig = isMobile
-            ? { left: 'prev,next', right: 'today' }
-            : { left: 'title', right: 'prev,next,dayGridMonth,timeGridWeek,timeGridDay,listWeek' };
-
-        var calendar = new FullCalendar.Calendar(calendarEl, {
-            initialView: defaultView,
-            headerToolbar: headerConfig,
-
-            events: "{{url_for('get_events')}}",
-            height: 'auto',
-            // eventClick: function (info) {
-            //     if (info.event.extendedProps.description && info.event.extendedProps.approved_by_username) {
-            //         alert("Description: " + info.event.extendedProps.description);
-            //     }
-            // },
-            eventContent: function (arg) {
-                let eventTitle = document.createElement('div');
-                eventTitle.classList.add('fc-event-title');
-                eventTitle.innerText = arg.event.title;
-
-                let eventRequestedby = document.createElement('div');
-                eventRequestedby.classList.add('fc-event-requestedby');
-                eventRequestedby.innerText = "Requested by: " + arg.event.extendedProps.requested_by_username;
-
-                let eventApprovedby = document.createElement('div');
-                eventApprovedby.classList.add('fc-event-approvedby');
-                eventApprovedby.id = arg.event.extendedProps.event_id;
-                eventApprovedby.innerText = arg.event.extendedProps.approved_by_username ? "Approved by: " + arg.event.extendedProps.approved_by_username : "Pending approval";
-                let userRole = "{{ session.get('role_name') }}";
-                if (!arg.event.extendedProps.approved_by_username && ["Admin", "Manager"].includes(userRole)) {
-                    let approveButton = document.createElement("button");
-                    approveButton.innerText = "Approve";
-                    approveButton.classList.add("fc-approve-btn");
-                    approveButton.onclick = function () {
-                        approveEvent(arg.event.extendedProps.event_id, approveButton);
-                    };
-                    return { domNodes: [eventTitle, eventRequestedby, eventApprovedby, approveButton] };
-                }
-                return { domNodes: [eventTitle, eventRequestedby, eventApprovedby] };
-            },
-            eventDidMount: function (info) {
-                if (info.event.extendedProps.description) {
-                    tippy(info.el, {
-                        content: "Description: " + info.event.extendedProps.description,
-                        placement: 'top',
-                        arrow: true
-                    });
-                }
-            }
-        });
-
-        calendar.render();
-    });
-    function approveEvent(eventId, button) {
-        fetch(`/approve_event/${eventId}`, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-        })
-            .then(data => {
-                if (data.status === 200) {
-                    button.innerText = "✅ Approved";
-                    let approvedByElement = document.getElementById(eventId);
-                    approvedByElement.innerText = "Approved by: {{ session.get('username') }}";
-                    button.disabled = true;
-                    button.classList.add("approved");
-                } else {
-                    alert("Error: " + data.message);
-                }
-                console.log("Response data:", data);
-            })
-            .catch(error => {
-                console.error("Error approving event:", error);
-                alert("An error occurred while approving the event.");
-            });
-    }
-</script>
-
+{% block extra_js %}
+    <script>
+        const GET_EVENTS_URL = "{{ url_for('get_events') }}";
+        const USER_ROLE = "{{ session.get('role_name', '') }}";
+        const CURRENT_USERNAME = "{{ session.get('username', '') }}";
+        const APPROVE_EVENT_URL_BASE = "/approve_event";
+    </script>
+    <script src="{{ url_for('static', filename='js/calendar.js') }}" type="module"></script>
 {% endblock %}

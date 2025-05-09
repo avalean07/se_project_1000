@@ -1,24 +1,9 @@
 <!doctype html>
 <html lang="en">
     <head>
-        <meta charset="UTF-8" />
-        <title>{% block title %}Campus Event & Task Scheduler{% endblock %}</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}" />
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-        <link
-            href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&display=swap"
-            rel="stylesheet" />
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" />
-        <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='images/favicon.ico') }}" />
-
-        <meta property="og:title" content="Campus Scheduler" />
-        <meta property="og:description" content="Create and manage your events and tasks easily." />
-        <meta property="og:image" content="https://preginex.fun/static/images/favicon.ico" />
-        <meta property="og:url" content="https://preginex.fun" />
-        <meta property="og:type" content="website" />
-        <meta name="author" content="awerks" />
+        {% include "_head.html" %}
+        {% block extra_head %}
+        {% endblock %}
     </head>
 
     <body>
@@ -26,119 +11,64 @@
             <nav class="navbar">
                 <div class="nav-container">
                     <div class="nav-logo">
-                        <a href="{{ url_for('index') }}">
-                            <i class="fas fa-calendar-alt"></i>
-                            Campus Scheduler
-                        </a>
+                        <a href="{{ url_for('index') }}"> <i class="fas fa-calendar-alt"></i> Campus Scheduler </a>
                     </div>
 
-                    <div class="nav-toggle" aria-label="toggle navigation">
+                    <button class="nav-toggle" aria-label="toggle navigation">
                         <i class="fas fa-bars"></i>
-                    </div>
+                    </button>
 
+                    {% import "macros/navigation.html" as nav %}
                     <ul class="nav-menu">
-                        <li class="nav-item">
-                            <a
-                                href="{{ url_for('index') }}"
-                                class="nav-link {% if request.endpoint == 'index' %}active{% endif %}">
-                                <i class="fas fa-home"></i> Home
-                            </a>
-                        </li>
-                        {% if not session.get('username') %}
-                        <li class="nav-item">
-                            <a
-                                href="{{ url_for('about') }}"
-                                class="nav-link {% if request.endpoint == 'about' %}active{% endif %}">
-                                <i class="fas fa-info-circle"></i> About
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a
-                                href="{{ url_for('privacy') }}"
-                                class="nav-link {% if request.endpoint == 'privacy' %}active{% endif %}">
-                                <i class="fas fa-user-shield"></i> Privacy
-                            </a>
-                        </li>
-                        {% endif %} {% if session.get('username') %} {% if session.get('role_name') in
-                        ['Admin','Manager'] %}
-                        <li class="nav-item">
-                            <a
-                                href="{{ url_for('projects') }}"
-                                class="nav-link {% if request.endpoint == 'projects' %}active{% endif %}">
-                                <i class="fas fa-project-diagram"></i> Projects
-                            </a>
-                        </li>
-                        {% endif %}
-                        <li class="nav-item">
-                            <a
-                                href="{{ url_for('tasks') }}"
-                                class="nav-link {% if request.endpoint == 'tasks' %}active{% endif %}">
-                                <i class="fas fa-tasks"></i> Tasks
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a
-                                href="{{ url_for('events') }}"
-                                class="nav-link {% if request.endpoint == 'events' %}active{% endif %}">
-                                <i class="fas fa-calendar"></i> Events
-                            </a>
-                        </li>
-                        {% if session.get('role_name') in ['Admin','Manager'] %}
-                        <li class="nav-item">
-                            <a
-                                href="{{ url_for('analysis') }}"
-                                class="nav-link {% if request.endpoint == 'analysis' %}active{% endif %}">
-                                <i class="fas fa-dollar-sign"></i> Costs
-                            </a>
-                        </li>
-                        {% endif %}
+                        {{ nav.link('Home',    'index',   'fas fa-home') }}
 
-                        <li class="nav-item" id="logout-link">
-                            <a href="{{ url_for('auth.logout') }}" class="nav-link">
-                                <i class="fas fa-sign-out-alt"></i> Logout
-                            </a>
-                        </li>
-                        <li class="nav-item profile-dropdown" id="profile-dropdown">
-                            <a href="#" class="nav-link profile-trigger">
-                                <img
-                                    src="{{ session.get('profile_pic', url_for('static', filename='images/placeholder.jpg')) }}"
-                                    alt="Profile Picture"
-                                    class="profile-pic" />
-                                <span class="profile-name"
-                                    >{{ session.get('name', session.get('username', 'User')) }}</span
-                                >
-                                <i class="fas fa-caret-down"></i>
-                            </a>
-                            <div class="dropdown-content">
-                                <div class="profile-info">
+                        {% if not session.get('username') %}
+                            {{ nav.link('About',   'about',   'fas fa-info-circle') }}
+                            {{ nav.link('Privacy', 'privacy', 'fas fa-user-shield') }}
+                            {{ nav.link('Login',    'auth.login',    'fas fa-sign-in-alt') }}
+                            {{ nav.link('Register', 'auth.register', 'fas fa-user-plus') }}
+                        {% else %}
+                            {% set role = session.get('role_name','') %}
+                            {% set is_admin = role in ['Admin','Manager'] %}
+
+                            {% if is_admin %}
+                                {{ nav.link('Projects', 'projects', 'fas fa-project-diagram') }}
+                            {% endif %}
+                            {{ nav.link('Tasks',  'tasks',  'fas fa-tasks') }}
+                            {{ nav.link('Events', 'events', 'fas fa-calendar') }}
+                            {% if is_admin %}
+                                {{ nav.link('Costs', 'analysis', 'fas fa-dollar-sign') }}
+                            {% endif %}
+                            <li class="nav-item profile-dropdown" id="profile-dropdown">
+                                <a href="#" class="nav-link profile-trigger">
                                     <img
                                         src="{{ session.get('profile_pic', url_for('static', filename='images/placeholder.jpg')) }}"
                                         alt="Profile Picture"
-                                        class="profile-pic-large" />
-                                    <div class="profile-text">
-                                        <span class="profile-username">{{ session.get('username', 'Profile') }}</span>
-                                        <span class="profile-username">{{ session.get('role_name', 'User') }}</span>
+                                        class="profile-pic"
+                                    />
+                                    <span class="profile-name"
+                                        >{{ session.get('name', session.get('username', 'User')) }}</span
+                                    >
+                                    <i class="fas fa-caret-down"></i>
+                                </a>
+                                <div class="dropdown-content">
+                                    <div class="profile-info">
+                                        <img
+                                            src="{{ session.get('profile_pic', url_for('static', filename='images/placeholder.jpg')) }}"
+                                            alt="Profile Picture"
+                                            class="profile-pic-large"
+                                        />
+                                        <div class="profile-text">
+                                            <span class="profile-username"
+                                                >{{ session.get('username', 'Profile') }}</span
+                                            >
+                                            <span class="profile-username">{{ session.get('role_name', 'User') }}</span>
+                                        </div>
                                     </div>
+                                    <hr />
+                                    <a href="{{ url_for('auth.logout') }}" class="dropdown-link">Logout</a>
                                 </div>
-                                <hr />
-                                <a href="{{ url_for('auth.logout') }}" class="dropdown-link">Logout</a>
-                            </div>
-                        </li>
-                        {% else %}
-                        <li class="nav-item">
-                            <a
-                                href="{{ url_for('auth.login') }}"
-                                class="nav-link {% if request.endpoint == 'auth.login' %}active{% endif %}">
-                                <i class="fas fa-sign-in-alt"></i> Login
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a
-                                href="{{ url_for('auth.register') }}"
-                                class="nav-link {% if request.endpoint == 'auth.register' %}active{% endif %}">
-                                <i class="fas fa-user-plus"></i> Register
-                            </a>
-                        </li>
+                            </li>
                         {% endif %}
                     </ul>
                 </div>
@@ -148,19 +78,35 @@
         <main class="container">{% block content %}{% endblock %}</main>
 
         <footer>
-            <div class="footer-container">
-                <p>&copy; {{ current_year if current_year else "2025" }} Campus Scheduler. All rights reserved.</p>
-            </div>
+            <div class="footer-container">© {{ (now().year) }} Campus Scheduler. All rights reserved.</div>
         </footer>
 
-        <script>
-            const navToggle = document.querySelector(".nav-toggle");
-            const navMenu = document.querySelector(".nav-menu");
+        {% block scripts %}
+            <script src="{{ url_for('static', filename='js/navbar.js') }}" defer></script>
+            <script>
+                Sentry.init({
+                    dsn: "https://bd6cee1c1e85487299af017f4c6b0117@app.glitchtip.com/11317",
+                    tracesSampleRate: 0.01,
+                });
+            </script>
+        {% endblock %}
 
-            navToggle.addEventListener("click", () => {
-                navMenu.classList.toggle("nav-menu_visible");
-                document.body.classList.toggle("menu-open", navMenu.classList.contains("nav-menu_visible"));
-            });
-        </script>
+        {% block extra_js %}
+        {% endblock %}
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <script type="module">
+                        Swal.fire({
+                            icon: "{{ category }}",
+                            title: "{{ message }}",
+                            showConfirmButton: true,
+                            timer: 3000,
+                        });
+                    </script>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
     </body>
 </html>

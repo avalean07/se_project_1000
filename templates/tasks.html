@@ -1,129 +1,52 @@
-{% extends "base.html" %} {% block content %}
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.css" />
-<script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.js"></script>
-<script src="https://unpkg.com/@popperjs/core@2"></script>
-<script src="https://unpkg.com/tippy.js@6"></script>
-<h1 class="title">Your Tasks</h1>
+{% extends "base.html" %}
+{% block title %}Tasks{% endblock %}
 
-<div id="taskCalendar"></div>
+{% block extra_head %}
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.css" />
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.js" defer></script>
+    <script src="https://unpkg.com/@popperjs/core@2" defer></script>
+    <script src="https://unpkg.com/tippy.js@6" defer></script>
+{% endblock %}
 
-<!-- {% if session.get('role_name') == 'Worker' %}
+{% block content %}
+    <h1 class="title">Your Tasks</h1>
 
-<div class="table-responsive">
-    <table class="tasks-table">
-        <thead>
-            <tr>
-                <th>Task Name</th>
-                <th>Description</th>
-                <th>Deadline</th>
-                <th>Status</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for task in tasks %}
-            <tr>
-                <td>{{ task.task_name }}</td>
-                <td>{{ task.task_description }}</td>
-                <td>{{ task.deadline.strftime('%Y-%m-%d') if task.deadline else '' }}</td>
-                <td>{{ task.status }}</td>
-                <td>
-                    {% if session.get('role_name') in ['Admin','Manager'] and task.status == 'Pending' %}
-                    <form method="POST" action="{{ url_for('approve_task', task_id=task.task_id) }}">
-                        <button type="submit" class="btn btn-primary">Approve</button>
-                    </form>
-                    {% endif %}
-                </td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
-</div>
-{% endif %} -->
+    <div id="taskCalendar"></div>
 
-{% if session.get('role_name') in ['Admin','Manager'] %}
-<h2>Assign New Tasks</h2>
-<form method="POST" action="{{ url_for('create_task') }}" class="task-form">
-    <label for="task_name">Task Name:</label>
-    <input type="text" id="task_name" name="task_name" required />
+    {% if session.get('role_name') in ['Admin','Manager'] %}
+        <h2>Assign New Tasks</h2>
+        <form method="POST" action="{{ url_for('create_task') }}" class="task-form">
+            <label for="task_name">Task Name:</label>
+            <input type="text" id="task_name" name="task_name" required minlength="2" maxlength="60" />
 
-    <label for="task_description">Description:</label>
-    <textarea id="task_description" name="task_description" required></textarea>
+            <label for="task_description">Description:</label>
+            <textarea id="task_description" name="task_description" required minlength="2" maxlength="60"></textarea>
 
-    <label for="deadline">Deadline:</label>
-    <input type="date" id="deadline" name="deadline" required />
+            <label for="deadline">Deadline:</label>
+            <input type="date" id="deadline" name="deadline" required />
 
-    <label for="project_id">Project:</label>
-    <select id="project_id" name="project_id" required>
-        {% for p in projects %}
-        <option value="{{ p.project_id }}">{{ p.project_name }}</option>
-        {% endfor %}
-    </select>
+            <label for="project_id">Project:</label>
+            <select id="project_id" name="project_id" required>
+                {% for p in projects %}
+                    <option value="{{ p.project_id }}">{{ p.project_name }}</option>
+                {% endfor %}
+            </select>
 
-    <label for="assigned_to">Assign To (Worker):</label>
-    <select id="assigned_to" name="assigned_to" required>
-        {% for w in workers %}
-        <option value="{{ w.user_id }}">{{ w.username }}</option>
-        {% endfor %}
-    </select>
+            <label for="assigned_to">Assign To (Worker):</label>
+            <select id="assigned_to" name="assigned_to" required>
+                {% for w in workers %}
+                    <option value="{{ w.user_id }}">{{ w.username }}</option>
+                {% endfor %}
+            </select>
 
-    <button type="submit" class="btn btn-primary">Create New Task</button>
-</form>
+            <button type="submit" class="btn btn-primary">Create New Task</button>
+        </form>
+    {% endif %}
+{% endblock %}
 
-{% with messages = get_flashed_messages() %} {% if messages %} {% for message in messages %}
-<script>
-    alert("{{ message }}");
-</script>
-{% endfor %} {% endif %} {% endwith %} {% endif %}
-
-<script>
-    document.addEventListener("DOMContentLoaded", function () {
-        var taskCalendarEl = document.getElementById("taskCalendar");
-
-        var isMobile = window.innerWidth < 768;
-        var defaultView = isMobile ? "listWeek" : "dayGridMonth";
-
-        var headerConfig = isMobile
-            ? { left: "prev,next", right: "today" }
-            : { left: "title", right: "prev,next,dayGridMonth,timeGridWeek,timeGridDay,listWeek" };
-        var taskCalendar = new FullCalendar.Calendar(taskCalendarEl, {
-            initialView: defaultView,
-            headerToolbar: headerConfig,
-            height: "auto",
-            events: "{{ url_for('get_tasks') }}",
-
-            eventDidMount: function (info) {
-                if (info.event.extendedProps.description) {
-                    tippy(info.el, {
-                        content: "Description: " + info.event.extendedProps.description,
-                        placement: "top",
-                        arrow: true,
-                    });
-                }
-            },
-            eventContent: function (arg) {
-                let title = document.createElement("div");
-                title.classList.add("fc-event-title");
-                title.innerText = arg.event.title;
-
-                let assignedTo = document.createElement("div");
-                assignedTo.classList.add("fc-event-requestedby");
-                assignedTo.innerText = "Assigned to you";
-
-                let status = document.createElement("div");
-                status.classList.add("fc-event-approvedby");
-                status.innerText = "Status: " + arg.event.extendedProps.status;
-
-                return { domNodes: [title, assignedTo, status] };
-            },
-            // eventClick: function (info) {
-            //     if (info.event.extendedProps.description) {
-            //         alert("Description: " + info.event.extendedProps.description);
-            //     }
-            // }
-        });
-
-        taskCalendar.render();
-    });
-</script>
+{% block extra_js %}
+    <script>
+        const GET_TASKS_URL = "{{ url_for('get_tasks') }}";
+    </script>
+    <script src="{{ url_for('static', filename='js/tasks.js') }}" type="module"></script>
 {% endblock %}
