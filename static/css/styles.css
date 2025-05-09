@@ -1435,16 +1435,17 @@ td.editable {
     display: inline-flex;
     align-items: center;
     justify-content: space-between;
-    background-color: #fff;
+    background-color: var(--surface-color);
     /*the white background*/
-    color: #6200ee;
+    color: var(--primary-color);
     /*the purple primary colour Illia was using*/
     cursor: pointer;
+    border: 1px solid var(--input-border-color);
     /*making the cursor a pointer when hovering over it*/
     padding: 1rem 1.25rem;
     /*the spacing scale used above as well*/
     width: 100%;
-    border: none;
+    /* border: none; */
     border-radius: .5rem;
     text-align: left;
     font-size: 1rem;
@@ -1457,20 +1458,19 @@ td.editable {
 
 .accordion:hover,
 .accordion.active {
-    background-color: #6200ee;
+    background-color: var(--primary-hover-color);
     /*filling with purple on hover*/
-    color: #fff;
+    color: var(--on-primary-color)
     /*inverting text to white, otherwise it's not readable*/
 }
 
 .accordion:hover i,
 .accordion.active i {
-    color: #fff;
+    color: var(--on-primary-color);
 }
 
 .panel {
-    background: #fff;
-    /*just white, it's the background*/
+    background: var(--surface-color);
     border: none;
     border-bottom-left-radius: 8px;
     border-bottom-right-radius: 8px;
@@ -1487,7 +1487,7 @@ td.editable {
     padding: 1rem 0;
     font-size: 0.95rem;
     line-height: 1.5;
-    color: #444;
+    color: var(--on-surface-color);
 }
 
 .accordion.active+.panel {
@@ -1497,7 +1497,7 @@ td.editable {
 
 .accordion i {
     font-size: 1.2rem;
-    color: #6200ee;
+    color: var(--primary-color);
     transition: transform 0.3s ease, color 0.3s ease;
 }
 
