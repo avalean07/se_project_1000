@@ -89,7 +89,7 @@
     --edit-btn-bg-color: #e0e0e0;
     --edit-btn-bg-color-hover: #d0d0d0;
     --light-white: #f9f9f9;
-    --faq-panel-bg: #f0f0f0;
+    --faq-panel-bg: #f0f0f073;
 
 
 }
@@ -234,6 +234,10 @@
     .analysis-section) {
     box-shadow: none;
     outline: 1px var(--input-border-color) solid;
+}
+
+:root[data-theme="dark"] .nav-menu.nav-menu {
+    background-color: var(--surface-color);
 }
 
 html,
@@ -637,7 +641,7 @@ footer {
         width: 100%;
         font-size: 1.75rem;
         height: 100%;
-        background-color: #121212;
+        background-color: var(--primary-color);
         padding-top: 2rem;
         display: flex;
         flex-direction: column;
@@ -665,7 +669,7 @@ footer {
         display: none;
     }
 
-    #logout-link {
+    #mobile-logout {
         display: block;
     }
 
