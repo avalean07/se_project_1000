@@ -236,9 +236,7 @@
     outline: 1px var(--input-border-color) solid;
 }
 
-:root[data-theme="dark"] .nav-menu.nav-menu {
-    background-color: var(--surface-color);
-}
+
 
 html,
 body {
@@ -655,6 +653,10 @@ footer {
         transition: transform 0.3s ease-in-out;
 
         overflow-y: auto;
+    }
+
+    :root[data-theme="dark"] .nav-menu {
+        background-color: var(--surface-color);
     }
 
     .nav-menu.nav-menu_visible {
