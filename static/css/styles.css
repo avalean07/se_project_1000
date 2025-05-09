@@ -89,6 +89,7 @@
     --edit-btn-bg-color: #e0e0e0;
     --edit-btn-bg-color-hover: #d0d0d0;
     --light-white: #f9f9f9;
+    --faq-panel-bg: #f0f0f0;
 
 
 }
@@ -178,6 +179,7 @@
     --cost-crashing-row-hover-bg: #302c35;
     --edit-btn-bg-color: #bb86fc;
     --edit-btn-bg-color-hover: #9d4edd;
+    --faq-panel-bg: #2c2c2c;
 }
 
 :root[data-theme="dark"]::selection {
@@ -221,9 +223,17 @@
 }
 
 
-:root[data-theme="dark"] .hero {
+:root[data-theme="dark"] :is(.hero,
+    .about-container,
+    .privacy-container,
+    .task-form,
+    .project-form,
+    .event-form,
+    .login-container,
+    .faq,
+    .analysis-section) {
     box-shadow: none;
-    outline: 1px gray solid;
+    outline: 1px var(--input-border-color) solid;
 }
 
 html,
@@ -1430,6 +1440,20 @@ td.editable {
 /*
     FAQ Accordion Styling 
 */
+.faq {
+    margin: 2rem 0;
+    padding: 2rem;
+    background-color: var(--surface-color);
+    border-radius: 8px;
+    box-shadow: 0 0 10px var(--shadow-color-soft);
+}
+
+.faq h2 {
+    color: var(--primary-color);
+    margin-block: 1.5rem;
+    font-size: 2rem;
+    font-weight: 600;
+}
 
 .accordion {
     display: inline-flex;
@@ -1445,12 +1469,11 @@ td.editable {
     padding: 1rem 1.25rem;
     /*the spacing scale used above as well*/
     width: 100%;
-    /* border: none; */
     border-radius: .5rem;
     text-align: left;
     font-size: 1rem;
     font-weight: 600;
-    transition: background-color 0.2s, color 0.2s;
+    transition: background-color 0.2s, color 0.2s, border-radius 0.2s ease-in-out;
     /*made the animation pretty snappy*/
     margin: 1rem 0 0;
 
@@ -1461,7 +1484,7 @@ td.editable {
     background-color: var(--primary-hover-color);
     /*filling with purple on hover*/
     color: var(--on-primary-color)
-    /*inverting text to white, otherwise it's not readable*/
+        /*inverting text to white, otherwise it's not readable*/
 }
 
 .accordion:hover i,
@@ -1470,14 +1493,10 @@ td.editable {
 }
 
 .panel {
-    background: var(--surface-color);
+    background: var(--faq-panel-bg);
     border: none;
-    border-bottom-left-radius: 8px;
-    border-bottom-right-radius: 8px;
-
     max-height: 0;
     overflow: clip;
-
     transition: max-height 0.3s ease;
     padding: 0 1rem;
 }
@@ -1490,9 +1509,8 @@ td.editable {
     color: var(--on-surface-color);
 }
 
-.accordion.active+.panel {
-    border-bottom-left-radius: 8px;
-    border-bottom-right-radius: 8px;
+.accordion.active {
+    border-radius: .5rem .5rem 0 0
 }
 
 .accordion i {
