@@ -1,18 +1,1 @@
-
-const toast = (msg, icon = 'success') =>
-    Swal.fire({
-        toast: true, position: 'bottom-end', icon, title: msg,
-        showConfirmButton: false, timer: 2200
-    });
-const confirmBox = (msg, confirmText = 'Yes, do it!') =>
-    Swal.fire({
-        title: msg, icon: 'warning',
-        showCancelButton: true, focusCancel: true,
-        confirmButtonText: confirmText, cancelButtonText: 'Cancel'
-    }).then(res => res.isConfirmed);
-
-const isMobile = () => {
-    return window.innerWidth <= 768;
-};
-
-export { isMobile, toast, confirmBox };
+let toast=(t,o="success")=>Swal.fire({toast:!0,position:"bottom-end",icon:o,title:t,showConfirmButton:!1,timer:2200}),confirmBox=(t,o="Yes, do it!")=>Swal.fire({title:t,icon:"warning",showCancelButton:!0,focusCancel:!0,confirmButtonText:o,cancelButtonText:"Cancel"}).then(t=>t.isConfirmed),isMobile=()=>window.innerWidth<=768;export{isMobile,toast,confirmBox};
