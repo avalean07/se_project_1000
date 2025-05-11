@@ -1782,3 +1782,74 @@ textarea {
         transition-delay: 0.1s;
     }
 }
+
+.cards-grid{    /*made this container so when a user shrink the width,
+                the cards get displayed one under the other, because they are fixed size*/
+    display: grid;
+    grid-template-columns: repeat(auto-fit, 280px);
+    gap: 2rem;
+    justify-content: center;
+    margin: 3rem auto;
+}
+
+            
+.card {     /*individually styling the cards*/
+    position: relative;     /*for the ::before overlay*/
+    background-color: var(--surface-color);
+    color: var(--on-surface-color);
+    border-radius: 8px;
+    padding: 1.5rem;
+    box-shadow: 0 4px 12px var(--shadow-color-soft);
+
+    /*stuff for tilting*/
+    transition: perspective(1000px) rotateX(0deg) rotateY(0deg) scale(1); /*starting angles*/
+    transform-style: preserve-3d;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    will-change: transform;
+    
+    /*I will force the square to have a fixed width ebcause otherwise they are too big*/
+    width: 100%;
+    max-width:280px;
+    aspect-ratio: 1/1; /*to be a box, like _*Solid Snake*_*/
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; /*flexing the layout so the content can sit top+bottom*/
+}
+
+.card:hover{    /*self explanatory*/
+    box-shadow: 0 6px 20px var(--shadow-color-medium); /*lifting on hover*/
+}
+
+.card::before {
+    content: "";
+    position: absolute;
+    inset:0;          /* shorthand apparently for top: 0; left:0; right:0; bottom:0;*/
+    border-radius:inherit;
+    background:rgba(255,255,255,0.05);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s ease;
+}
+
+.card:hover::before {
+    opacity: 1;
+}
+
+.card i {   /*the icon size inside the card*/
+    display: block;
+    font-size: 1.75 rem;
+    color: var(--primary-color);
+    margin-bottom: 0.75rem;
+}
+
+.card h3 {      /*title*/
+    margin-bottom: 0.5rem;
+    font-size: 1.25rem;
+}
+
+.card p {   /*and the paragraph*/
+    line-height: 1.5;
+    font-size: 0.95rem; /*too big?   nvm it look pretty good*/
+    color: var(--medium-emphasis-text-color);
+}

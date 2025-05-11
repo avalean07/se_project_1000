@@ -32,6 +32,43 @@
         </div>
     </section>
 
+    <!--Cards-->
+
+    <section class="cards-grid">
+        <div class="card">
+            <i class="fas fa-tasks"></i>
+            <h3>Task Management</h3>
+            <p>Plan, assign, and track tasks seamlessly with due-dates, priorities,
+                and progress indicators, all in one place.
+            </p>
+        </div>
+
+        <div class="card">
+            <i class="fas fa-calendar-alt"></i>
+            <h3>Event Scheduling</h3>
+            <p>Organize meetings and milestones on an interactive calendar, send invites and 
+                get automatic reminders.
+            </p>
+        </div>
+
+        <div class="card">
+            <i class="fas fa-check-circle"></i>
+            <h3>Approval Workflows</h3>
+            <p>Define custom approvals, notify stakeholders, and keep full audit trail of
+                 decisions and sign-offs.</p>
+        </div>
+
+        <div class="card">
+            <i class="fas fa-project-diagram"></i>
+            <h3>Project Tracking</h3>
+            <p>Visualize timelines, Gantt charts, and resource allocation so you always know
+                where every project stands.
+            </p>
+        </div>
+    </section>
+
+
+
     <!-- FAQ section -->
     <section class="faq">
         <h2>Frequently Asked Questions</h2>
@@ -84,6 +121,7 @@
             </p>
         </div>
     </section>
+
     <div class="text-center"></div>
     <script>
         const acc = document.getElementsByClassName("accordion");
@@ -99,6 +137,43 @@
                     panel.style.maxHeight = panel.scrollHeight + "px";
                 }
             });
+        }
+    </script>
+
+    <script>
+        const cards = document.querySelectorAll('.card');   //grabing all cards
+
+        cards.forEach(card => {
+            card.addEventListener('mousemove', handleMove);
+            card.addEventListener('mouseleave', handleLeave);
+        });
+
+        function handleMove(e) {
+            const card = e.currentTarget;
+            const rect = card.getBoundingClientRect();
+
+            
+            const px = (e.clientX - rect.left)  / rect.width  - 0.5;    //this calculates pointer position from center [-0.5 .. +0.5], like on w3 school
+            const py = (e.clientY - rect.top)   / rect.height - 0.5;
+
+            const rotMax = 13;  //max rotation in degrees, but I think 13 is not that much, it looks similar to github
+
+            const rotY =  px * rotMax;      //invert Y so moving up tilts toward you
+            const rotX = -py * rotMax;
+
+            const scale = 1.03;     //slightly scale up on hover
+
+            card.style.transform =
+            `perspective(1000px)
+            rotateX(${rotX}deg)
+            rotateY(${rotY}deg)
+            scale(${scale})`;
+        }
+
+        function handleLeave(e) {
+            const card = e.currentTarget;
+            card.style.transform = 
+            `perspective(1000px) rotateX(0deg) rotateY(0deg) scale(1)`;
         }
     </script>
 {% endblock %}
