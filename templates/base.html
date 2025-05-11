@@ -6,6 +6,8 @@
         {% endblock %}
     </head>
     <body>
+        <body class="{% block body_class %}{% endblock %}">
+
         <header>
             <nav class="navbar">
                 <div class="nav-container">
@@ -118,12 +120,6 @@
         {% block scripts %}
             <script src="{{ url_for('static', filename='js/navbar.js') }}" defer></script>
             <script>
-                document.addEventListener("DOMContentLoaded", () => {
-                    Sentry.init({
-                        dsn: "https://bd6cee1c1e85487299af017f4c6b0117@app.glitchtip.com/11317",
-                        tracesSampleRate: 0.01,
-                    });
-                });
                 function activatePartyMode() {
                     confetti({ particleCount: 200, spread: 1000 });
                 }

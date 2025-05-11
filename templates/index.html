@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% block body_class %}home-page{% endblock %}
 {% block title %}Home - Campus Scheduler{% endblock %}
 {% block content %}
     <div class="gradient-circle"></div>
@@ -15,12 +16,12 @@
             Your all-in-one solution for managing campus events and project tasks seamlessly. Dive in to explore and
             organize!
         </p>
-        <div class="hero-features">
+        <!-- <div class="hero-features">
             <span><i class="fas fa-tasks"></i> Task Management</span>
             <span><i class="fas fa-calendar-alt"></i> Event Scheduling</span>
             <span><i class="fas fa-project-diagram"></i> Project Tracking</span>
             <span><i class="fas fa-check-circle"></i> Approval Workflows</span>
-        </div>
+        </div> -->
         <div class="hero-buttons">
             <a href="{{ url_for('projects') }}" class="btn btn-primary">
                 <i class="fas fa-arrow-right"></i> Explore Projects
@@ -35,39 +36,68 @@
     <!--Cards-->
 
     <section class="cards-grid">
-        <div class="card">
-            <i class="fas fa-tasks"></i>
-            <h3>Task Management</h3>
-            <p>Plan, assign, and track tasks seamlessly with due-dates, priorities,
-                and progress indicators, all in one place.
+        <div class="card card__projects">
+            <i class="fas fa-list-check"></i>
+            <h2>Project Management</h2>
+            <p>
+                Oversee projects from inception to completion. Create, assign, and monitor tasks with detailed tracking
+                and interactive graph visualizations.
             </p>
+            <div class="glow"></div>
         </div>
 
         <div class="card">
-            <i class="fas fa-calendar-alt"></i>
-            <h3>Event Scheduling</h3>
-            <p>Organize meetings and milestones on an interactive calendar, send invites and 
-                get automatic reminders.
+            <i class="fas fa-calendar-days"></i>
+            <h2>Event Scheduling</h2>
+            <p>
+                Manage all campus events, from requests to approvals, on a dynamic shared calendar. Keep everyone
+                informed and organized.
             </p>
+            <div class="glow"></div>
+        </div>
+
+        <div class="card card__analysis">
+            <i class="fas fa-chart-pie"></i>
+            <h2>Project Analytics</h2>
+            <p>
+                Dive deep into your project data. Our analytics suite helps you identify critical paths, perform
+                cost-crashing analysis to optimize budget
+            </p>
+            <h3 class="features-list-heading">Key Analytical Tools:</h3>
+            <ul class="features-list">
+                <li><i class="fas fa-route"></i> Critical Path Identification</li>
+                <li><i class="fas fa-dollar-sign"></i> Cost Crashing Analysis</li>
+                <li><i class="fas fa-project-diagram"></i> Dependency Visualization</li>
+            </ul>
+            <div class="glow"></div>
         </div>
 
         <div class="card">
-            <i class="fas fa-check-circle"></i>
-            <h3>Approval Workflows</h3>
-            <p>Define custom approvals, notify stakeholders, and keep full audit trail of
-                 decisions and sign-offs.</p>
+            <i class="fas fa-users-gear"></i>
+            <h2>Role-Based System</h2>
+            <p>Ensure data integrity with defined user roles (Admin, Manager, Worker) and easy Google authentication</p>
+            <div class="glow"></div>
+        </div>
+        <div class="card">
+            <i class="fas fa-sitemap"></i>
+            <h2>Network Graphs</h2>
+            <p>
+                Visualize project structures, task dependencies with dynamic network graphs for clearer understanding
+                and planning.
+            </p>
+            <div class="glow"></div>
         </div>
 
-        <div class="card">
-            <i class="fas fa-project-diagram"></i>
-            <h3>Project Tracking</h3>
-            <p>Visualize timelines, Gantt charts, and resource allocation so you always know
-                where every project stands.
+        <div class="card card__interface">
+            <i class="fas fa-palette"></i>
+            <h2>User-Friendly Interface</h2>
+            <p>
+                Experience a clean, responsive interface with customizable light and dark themes, with a focus on
+                usability and accessibility.
             </p>
+            <div class="glow"></div>
         </div>
     </section>
-
-
 
     <!-- FAQ section -->
     <section class="faq">
@@ -121,59 +151,7 @@
             </p>
         </div>
     </section>
-
-    <div class="text-center"></div>
-    <script>
-        const acc = document.getElementsByClassName("accordion");
-        for (let i = 0; i < acc.length; i++) {
-            acc[i].addEventListener("click", function () {
-                this.classList.toggle("active");
-                this.setAttribute("aria-expanded", this.classList.contains("active"));
-                const panel = this.nextElementSibling;
-                panel.setAttribute("aria-hidden", !this.classList.contains("active"));
-                if (panel.style.maxHeight) {
-                    panel.style.maxHeight = null;
-                } else {
-                    panel.style.maxHeight = panel.scrollHeight + "px";
-                }
-            });
-        }
-    </script>
-
-    <script>
-        const cards = document.querySelectorAll('.card');   //grabing all cards
-
-        cards.forEach(card => {
-            card.addEventListener('mousemove', handleMove);
-            card.addEventListener('mouseleave', handleLeave);
-        });
-
-        function handleMove(e) {
-            const card = e.currentTarget;
-            const rect = card.getBoundingClientRect();
-
-            
-            const px = (e.clientX - rect.left)  / rect.width  - 0.5;    //this calculates pointer position from center [-0.5 .. +0.5], like on w3 school
-            const py = (e.clientY - rect.top)   / rect.height - 0.5;
-
-            const rotMax = 13;  //max rotation in degrees, but I think 13 is not that much, it looks similar to github
-
-            const rotY =  px * rotMax;      //invert Y so moving up tilts toward you
-            const rotX = -py * rotMax;
-
-            const scale = 1.03;     //slightly scale up on hover
-
-            card.style.transform =
-            `perspective(1000px)
-            rotateX(${rotX}deg)
-            rotateY(${rotY}deg)
-            scale(${scale})`;
-        }
-
-        function handleLeave(e) {
-            const card = e.currentTarget;
-            card.style.transform = 
-            `perspective(1000px) rotateX(0deg) rotateY(0deg) scale(1)`;
-        }
-    </script>
+    {% block extra_js %}
+        <script src="{{ url_for('static', filename='js/index.js') }}"></script>
+    {% endblock %}
 {% endblock %}

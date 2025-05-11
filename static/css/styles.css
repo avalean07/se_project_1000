@@ -251,8 +251,7 @@
 }
 
 
-:root[data-theme="dark"] :is(.hero,
-    .about-container,
+:root[data-theme="dark"] :is(.about-container,
     .privacy-container,
     .task-form,
     .project-form,
@@ -316,6 +315,10 @@ main.container {
     width: 100%;
     margin: 4rem auto;
     padding: 0 1rem;
+}
+
+body.home-page main {
+    max-width: 1300px;
 }
 
 header {
@@ -464,19 +467,18 @@ header {
 }
 
 .hero {
-    background-color: var(--surface-color);
+    /* background-color: var(--surface-color); */
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     padding: 2rem;
     border-radius: 8px;
-    box-shadow: 0 0 10px var(--shadow-color-soft);
+    /* box-shadow: 0 0 10px var(--shadow-color-soft); */
     text-align: center;
     margin-bottom: 2rem;
     min-height: 30rem;
     margin-top: 3rem;
-
 }
 
 .spin {
@@ -525,13 +527,13 @@ header {
 }
 
 .hero h1 {
-    margin-bottom: 1rem;
-    font-size: 2rem;
+    margin-bottom: 2rem;
+    font-size: 4rem;
     color: var(--on-surface-color);
 }
 
 .hero p {
-    margin-bottom: 1.5rem;
+    margin-bottom: 2.5rem;
     font-size: 1.1rem;
     line-height: 1.5;
     max-width: 65ch;
@@ -1536,6 +1538,7 @@ textarea {
     padding: 1rem 0;
     font-size: 0.95rem;
     line-height: 1.5;
+    max-width: 70ch;
     color: var(--on-surface-color);
 }
 
@@ -1783,73 +1786,137 @@ textarea {
     }
 }
 
-.cards-grid{    /*made this container so when a user shrink the width,
-                the cards get displayed one under the other, because they are fixed size*/
+
+@media screen and (min-width: 1024px) {
+    .card__projects {
+        grid-column: span 2;
+    }
+
+    .card__analysis {
+        grid-row: span 2;
+    }
+
+    .card__interface {
+        grid-column: span 2;
+    }
+}
+
+@media screen and (min-width: 1200px) {
+    .card__interface {
+        grid-column: auto;
+    }
+}
+
+.cards-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, 280px);
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
     gap: 2rem;
-    justify-content: center;
     margin: 3rem auto;
 }
 
-            
-.card {     /*individually styling the cards*/
-    position: relative;     /*for the ::before overlay*/
+
+.card {
+    position: relative;
     background-color: var(--surface-color);
     color: var(--on-surface-color);
-    border-radius: 8px;
-    padding: 1.5rem;
+    border-radius: 1rem;
+    padding: 2rem;
     box-shadow: 0 4px 12px var(--shadow-color-soft);
-
-    /*stuff for tilting*/
-    transition: perspective(1000px) rotateX(0deg) rotateY(0deg) scale(1); /*starting angles*/
     transform-style: preserve-3d;
     transition: transform 0.2s ease, box-shadow 0.2s ease;
-    will-change: transform;
-    
-    /*I will force the square to have a fixed width ebcause otherwise they are too big*/
-    width: 100%;
-    max-width:280px;
-    aspect-ratio: 1/1; /*to be a box, like _*Solid Snake*_*/
-
+    will-change: transform, box-shadow;
     display: flex;
     flex-direction: column;
-    justify-content: space-between; /*flexing the layout so the content can sit top+bottom*/
+    gap: 1.5rem;
 }
 
-.card:hover{    /*self explanatory*/
-    box-shadow: 0 6px 20px var(--shadow-color-medium); /*lifting on hover*/
+.card:hover {
+    box-shadow: 0 6px 20px var(--shadow-color-medium);
 }
+
 
 .card::before {
     content: "";
     position: absolute;
-    inset:0;          /* shorthand apparently for top: 0; left:0; right:0; bottom:0;*/
-    border-radius:inherit;
-    background:rgba(255,255,255,0.05);
+    inset: 0;
+    border-radius: inherit;
+    background: rgba(255, 255, 255, 0.05);
     opacity: 0;
     pointer-events: none;
     transition: opacity 0.2s ease;
+}
+
+.card:hover {
+    --active: 1;
 }
 
 .card:hover::before {
     opacity: 1;
 }
 
-.card i {   /*the icon size inside the card*/
-    display: block;
-    font-size: 1.75 rem;
+
+.card i {
     color: var(--primary-color);
-    margin-bottom: 0.75rem;
+    font-size: 1.5rem;
 }
 
-.card h3 {      /*title*/
-    margin-bottom: 0.5rem;
-    font-size: 1.25rem;
+.card .glow {
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background-image: radial-gradient(circle 360px at var(--x) var(--y), rgba(178, 122, 247, 0.25), transparent);
+    opacity: var(--active, 0);
+    pointer-events: none;
+    transition: opacity 0.2s ease;
 }
 
-.card p {   /*and the paragraph*/
-    line-height: 1.5;
-    font-size: 0.95rem; /*too big?   nvm it look pretty good*/
+.card h2 {
+    all: unset;
+    font-weight: 600;
+    font-size: 1.375rem;
+}
+
+.card p {
+    line-height: 1.6;
+    font-size: 1rem;
+    max-width: 50ch;
+    text-wrap: pretty;
     color: var(--medium-emphasis-text-color);
+}
+
+.card .features-list-heading {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--on-surface-variant-color);
+    margin-top: 1.5rem;
+    margin-bottom: 0.75rem;
+    text-align: left;
+}
+
+.card .features-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    text-align: left;
+    font-size: 0.9rem;
+    color: var(--medium-emphasis-text-color);
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+}
+
+.card .features-list li {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    line-height: 1.5;
+}
+
+.card .features-list li i {
+    font-size: 1em;
+    color: var(--primary-color);
+    width: 1.2em;
+    text-align: center;
+    margin-top: 0.15em;
+    flex-shrink: 0;
 }
