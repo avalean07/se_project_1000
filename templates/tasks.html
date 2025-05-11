@@ -17,10 +17,25 @@
         <h2>Assign New Tasks</h2>
         <form method="POST" action="{{ url_for('create_task') }}" class="task-form">
             <label for="task_name">Task Name:</label>
-            <input type="text" id="task_name" name="task_name" required minlength="2" maxlength="60" />
+            <input
+                type="text"
+                id="task_name"
+                name="task_name"
+                required
+                minlength="2"
+                maxlength="60"
+                placeholder="Your task"
+            />
 
             <label for="task_description">Description:</label>
-            <textarea id="task_description" name="task_description" required minlength="2" maxlength="60"></textarea>
+            <textarea
+                id="task_description"
+                name="task_description"
+                required
+                minlength="2"
+                maxlength="60"
+                placeholder="Description"
+            ></textarea>
 
             <label for="deadline">Deadline:</label>
             <input type="date" id="deadline" name="deadline" required />

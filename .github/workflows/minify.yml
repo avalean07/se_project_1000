@@ -1,0 +1,37 @@
+on:
+    push:
+        branches:
+            - main
+        paths:
+            - "static/css/**"
+            - "static/js/**"
+            - ".github/workflows/minify.yml"
+
+permissions:
+    contents: write
+jobs:
+    minify:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Check out the repository
+              uses: actions/checkout@v4
+
+            - name: Minify css files
+              uses: nizarmah/auto-minify@v3
+              with:
+                  directory: "static/css"
+                  overwrite: true
+            - name: Minify js files
+              uses: nizarmah/auto-minify@v3
+              with:
+                  directory: "static/js"
+                  overwrite: true
+                  js_engine: "uglify-js"
+
+            - name: Commit the minified files
+              uses: stefanzweifel/git-auto-commit-action@v5
+              with:
+                  commit_message: "bot: Add auto minified files"
+                  branch: production
+                  push_options: "--force"
+                  create_branch: true

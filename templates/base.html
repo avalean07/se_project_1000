@@ -19,6 +19,31 @@
 
                     {% import "macros/navigation.html" as nav %}
                     <ul class="nav-menu">
+                        <button
+                            class="theme-toggle"
+                            id="theme-toggle"
+                            title="Toggles light & dark"
+                            aria-label="auto"
+                            aria-live="polite"
+                        >
+                            <svg class="sun-and-moon" aria-hidden="true" width="24" height="24" viewBox="0 0 24 24">
+                                <mask class="moon" id="moon-mask">
+                                    <rect x="0" y="0" width="100%" height="100%" fill="white" />
+                                    <circle cx="24" cy="10" r="6" fill="black" />
+                                </mask>
+                                <circle class="sun" cx="12" cy="12" r="6" mask="url(#moon-mask)" fill="currentColor" />
+                                <g class="sun-beams" stroke="currentColor">
+                                    <line x1="12" y1="1" x2="12" y2="3" />
+                                    <line x1="12" y1="21" x2="12" y2="23" />
+                                    <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" />
+                                    <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
+                                    <line x1="1" y1="12" x2="3" y2="12" />
+                                    <line x1="21" y1="12" x2="23" y2="12" />
+                                    <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" />
+                                    <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
+                                </g>
+                            </svg>
+                        </button>
                         {{ nav.link('Home',    'index',   'fas fa-home') }}
 
                         {% if not session.get('username') %}
@@ -66,21 +91,13 @@
                                     </div>
                                     <hr />
                                     <div>
-                                        <div class="theme-switch-wrapper dropdown-link">
-                                            <label class="theme-switch-label" for="theme-checkbox">
-                                                <span style="margin-right: 8px; vertical-align: middle;"
-                                                    >Dark theme</span
-                                                >
-                                                <div class="theme-switch">
-                                                    <input type="checkbox" id="theme-checkbox" />
-                                                    <div class="slider round"></div>
-                                                </div>
-                                            </label>
-                                        </div>
                                         <a href="{{ url_for('auth.logout') }}" class="dropdown-link">Logout</a>
+                                        <a href="#" id="spin-me" class="dropdown-link">Spin me</a>
+                                        <a href="#" class="dropdown-link" onclick="activatePartyMode()">Confetti!</a>
                                     </div>
                                 </div>
                             </li>
+
                             <li class="nav-item" id="mobile-logout">
                                 <a href="{{ url_for('auth.logout') }}" class="nav-link">
                                     <i class="fas fa-sign-out-alt"></i> Logout
@@ -107,6 +124,9 @@
                         tracesSampleRate: 0.01,
                     });
                 });
+                function activatePartyMode() {
+                    confetti({ particleCount: 200, spread: 1000 });
+                }
             </script>
         {% endblock %}
 

@@ -16,12 +16,19 @@
     <form method="POST" action="{{ url_for('request_event') }}" class="event-form">
         <div class="form-group">
             <label for="event_name">Event Name:</label>
-            <input type="text" id="event_name" name="event_name" required min="2" max="60" />
+            <input type="text" id="event_name" name="event_name" required min="2" max="60" placeholder="Your event" />
         </div>
 
         <div class="form-group">
             <label for="event_description">Description:</label>
-            <textarea id="event_description" name="event_description" required minlength="2" maxlength="512"></textarea>
+            <textarea
+                id="event_description"
+                name="event_description"
+                required
+                minlength="2"
+                maxlength="512"
+                placeholder="Description"
+            ></textarea>
         </div>
 
         <div class="form-group">

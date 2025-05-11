@@ -62,16 +62,31 @@
         </div>
     {% endif %}
 
-    <h2>Create Project (Project Charter)</h2>
+    <h2>Create Project</h2>
 
     <form method="POST" action="{{ url_for('create_project') }}" class="project-form">
         <div class="form-group">
             <label for="project_name">Project Name:</label>
-            <input type="text" id="project_name" name="project_name" required minlength="2" maxlength="60" />
+            <input
+                type="text"
+                id="project_name"
+                name="project_name"
+                required
+                minlength="2"
+                maxlength="60"
+                placeholder="My favourite project"
+            />
         </div>
         <div class="form-group">
             <label for="description">Description:</label>
-            <textarea id="description" name="description" minlength="2" required maxlength="512"></textarea>
+            <textarea
+                id="description"
+                name="description"
+                minlength="2"
+                required
+                maxlength="512"
+                placeholder="Description"
+            ></textarea>
         </div>
         <div class="form-group">
             <label for="start_date">Start Date:</label>

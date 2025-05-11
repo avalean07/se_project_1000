@@ -34,10 +34,16 @@ if you sign in with google, you'll have worker's access rights for now.
 git clone https://github.com/avalean07/se_project_1000 && cd se_project_1000
 ```
 
-### Create conda environment
+### Create a virtual environment
 
 ```bash
-conda create -n se_project python=3.12 --file requirements.txt
+python -m venv env && source env/bin/activate
+```
+
+### Install dependencies
+
+```bash
+pip3 install -r requirements.txt
 ```
 
 ## Set environment variables
@@ -51,14 +57,15 @@ conda create -n se_project python=3.12 --file requirements.txt
 - `DATABASE_PUBLIC_URL`
 
 ```bash
-conda env config vars set myvar=value
+EXPORT DATABASE_PUBLIC_URL=value
+.. # set the rest of the environment variables
 ```
 
-### Restart the conda environment
+### Confirm you've set **all** the environment variables
 
 ```bash
-conda deactivate
-conda activate se_project
+echo $DATABASE_PUBLIC_URL
+..
 ```
 
 ### Run the server

@@ -20,7 +20,7 @@ document.addEventListener("DOMContentLoaded", function () {
             toast('End date must be after start date', 'error');
         }
     });
-
+    const isDark = document.documentElement.getAttribute("data-theme") === "dark";
     fetch(PROJECTS_URL)
         .then((response) => response.json())
         .then((data) => {
@@ -45,13 +45,13 @@ document.addEventListener("DOMContentLoaded", function () {
                         "<span style='color: #4caf50;'><i class='fas fa-calendar-check'></i> End: " +
                         project.end +
                         "</span><br>" +
-                        "<span style='color: black;'><i class='fas fa-user'></i> Manager: " +
+                        `<span style="color: ${isDark ? '#f5f5f5' : '#000'};"><i class='fas fa-user'></i> Manager: ` +
                         project.manager +
                         "</span>",
                     ),
                     //title: "Project Description: " + project.description + "\nStart: " + project.start + "\nEnd: " + project.end + "\nManager: " + project.manager,
                     shape: "box",
-                    color: "#6200ee",
+                    color: "#a069ed",
                     font: { color: "#ffffff", size: 16 },
                     borderWidth: 2,
                     margin: 10,

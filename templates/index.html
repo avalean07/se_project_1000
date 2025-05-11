@@ -1,8 +1,16 @@
 {% extends "base.html" %}
 {% block title %}Home - Campus Scheduler{% endblock %}
 {% block content %}
+    <div class="gradient-circle"></div>
+    <div class="gradient-circle"></div>
+    <div class="gradient-circle"></div>
+    <div class="gradient-circle"></div>
+
     <section class="hero">
-        <h1>{% if user %}Welcome, {{ user }}{% else %}Welcome{% endif %} to Campus Event & Task Scheduler</h1>
+        <h1>
+            {% if user %}Welcome, <span class="text-gradient">{{ user }}</span>{% else %}Welcome{% endif %} to Campus
+            Event & Task Scheduler
+        </h1>
         <p>
             Your all-in-one solution for managing campus events and project tasks seamlessly. Dive in to explore and
             organize!
@@ -13,9 +21,15 @@
             <span><i class="fas fa-project-diagram"></i> Project Tracking</span>
             <span><i class="fas fa-check-circle"></i> Approval Workflows</span>
         </div>
-        <a href="{{ url_for('projects') }}" class="btn btn-primary">
-            <i class="fas fa-arrow-right"></i> Explore Projects
-        </a>
+        <div class="hero-buttons">
+            <a href="{{ url_for('projects') }}" class="btn btn-primary">
+                <i class="fas fa-arrow-right"></i> Explore Projects
+            </a>
+            <a class="btn btn-github" href="https://github.com/awerks/se_project_1000" target="_blank">
+                <i class="fa-brands fa-github"></i>
+                View on GitHub
+            </a>
+        </div>
     </section>
 
     <!-- FAQ section -->
@@ -70,10 +84,9 @@
             </p>
         </div>
     </section>
-
+    <div class="text-center"></div>
     <script>
         const acc = document.getElementsByClassName("accordion");
-
         for (let i = 0; i < acc.length; i++) {
             acc[i].addEventListener("click", function () {
                 this.classList.toggle("active");

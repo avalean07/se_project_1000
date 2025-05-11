@@ -11,6 +11,7 @@ window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", (e)
     if (!localStorage.getItem("theme")) {
         const newColorScheme = e.matches ? "dark" : "light";
         applyTheme(newColorScheme);
+
     }
 });
 
@@ -26,22 +27,50 @@ function saveThemePreference(theme) {
 }
 
 document.addEventListener("DOMContentLoaded", function () {
-    const themeToggle = document.getElementById("theme-checkbox");
+    const spinMe = document.getElementById("spin-me");
+    const themeToggle = document.getElementById("theme-toggle");
+    if (spinMe) {
+        spinMe.addEventListener("click", spinFunction);
+    }
     if (themeToggle) {
         const currentTheme = localStorage.getItem("theme");
         if (document.documentElement.getAttribute("data-theme") === "dark" || currentTheme === "dark") {
-            themeToggle.checked = true;
+            themeToggle.ariaLabel = "dark";
         }
-        themeToggle.addEventListener("change", function () {
-            if (this.checked) {
+        else {
+            themeToggle.ariaLabel = "light";
+        }
+
+        themeToggle.addEventListener("click", function () {
+            if (this.ariaLabel === "light") {
                 applyTheme("dark");
                 saveThemePreference("dark");
-                this.checked = true;
+                this.ariaLabel = "dark";
             } else {
                 applyTheme("light");
                 saveThemePreference("light");
-                this.checked = false;
+                this.ariaLabel = "light";
             }
         });
     }
 });
+
+function spinFunction() {
+    const root = document.documentElement;
+    const spintime = 15 * 1000;
+    root.style.setProperty("--spintime", spintime + "ms");
+    root.classList.add("spin");
+    root.style.overflow = "hidden";
+    const onClick = () => cleanUp();
+    const timeoutId = setTimeout(cleanUp, spintime);
+
+    document.addEventListener("click", onClick, { once: true, capture: true });
+
+    function cleanUp() {
+        root.classList.remove("spin");
+        root.style.overflow = null;
+        root.style.setProperty("--spintime", null);
+        clearTimeout(timeoutId);
+        document.removeEventListener("click", onClick, { capture: true });
+    }
+}
