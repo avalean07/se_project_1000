@@ -12,7 +12,10 @@
             <nav class="navbar">
                 <div class="nav-container">
                     <div class="nav-logo">
-                        <a href="{{ url_for('index') }}"> <i class="fas fa-calendar-alt"></i> ProjeX </a>
+                        <a href="{{ url_for('index') }}">
+                            <img src="{{ url_for('static', filename='images/Logo.png') }}" alt="Logo" style="height: 24px; vertical-align: middle; margin-right: 8px;">
+                            ProjeX
+                        </a>    
                     </div>
 
                     <button class="nav-toggle" aria-label="toggle navigation">
