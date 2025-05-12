@@ -10,7 +10,10 @@
             <nav class="navbar">
                 <div class="nav-container">
                     <div class="nav-logo">
-                        <a href="{{ url_for('index') }}"> <i class="fas fa-calendar-alt"></i> Campus Scheduler </a>
+                        <a href="{{ url_for('index') }}">
+                            <img src="{{ url_for('static', filename='images/Logo.png') }}" alt="Logo" style="height: 24px; vertical-align: middle; margin-right: 8px;">
+                            ProjeX
+                        </a>                        
                     </div>
 
                     <button class="nav-toggle" aria-label="toggle navigation">
@@ -119,7 +122,7 @@
         <main class="container">{% block content %}{% endblock %}</main>
 
         <footer class="footer">
-            <div class="footer-container">© {{ (now().year) }} Campus Scheduler. All rights reserved.</div>
+            <div class="footer-container">© {{ (now().year) }} ProjeX. All rights reserved.</div>
         </footer>
 
         {% block scripts %}

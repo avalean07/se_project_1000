@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% block title %}Home - Campus Scheduler{% endblock %}
+{% block title %}Home - ProjeX{% endblock %}
 {% block content %}
     <div class="gradient-circle"></div>
     <div class="gradient-circle"></div>
@@ -8,11 +8,10 @@
 
     <section class="hero">
         <h1>
-            {% if user %}Welcome, <span class="text-gradient">{{ user }}</span>{% else %}Welcome{% endif %} to Campus
-            Event & Task Scheduler
+            {% if user %}Welcome, <span class="text-gradient">{{ user }}</span>{% else %}Welcome{% endif %} to your Project Management System
         </h1>
         <p>
-            Your all-in-one solution for managing campus events and project tasks seamlessly. Dive in to explore and
+            Your all-in-one solution for managing projects and tasks seamlessly. Dive in to explore and
             organize!
         </p>
         <div class="hero-features">
@@ -37,12 +36,12 @@
         <h2>Frequently Asked Questions</h2>
 
         <button class="accordion" id="accordion-btn-1" aria-expanded="false" aria-controls="panel-1">
-            What is Campus Scheduler?
+            What is ProjeX?
             <i class="fas fa-caret-down"></i>
         </button>
         <div class="panel" id="panel-1" role="region" aria-labelledby="accordion-btn-1" aria-hidden="true">
             <p>
-                Campus Scheduler is your <strong>all-in-one solution</strong> for managing everyday campus activities.
+                ProjeX is a Project Management System that is an <strong>all-in-one solution</strong> for managing projects, tasks and events.
                 With it, you can schedule appointments with <em>professors, supervisors, colleagues, and more</em>. It
                 provides a comprehensive way to manage your time and stay up to date with your work by allowing you to
                 receive or assign projects and tasks, as well as leave comments on them.
@@ -55,19 +54,19 @@
         </button>
         <div class="panel" id="panel-2" role="region" aria-labelledby="accordion-btn-2" aria-hidden="true">
             <p>
-                Our product empowers users to manage their time more efficiently than ever before. Campus Scheduler
+                Our product empowers users to manage their time more efficiently than ever before. 
                 offers exceptional flexibility for organizing meetings, activities, and projects with just a few simple
                 interactions.
             </p>
         </div>
 
         <button class="accordion" id="accordion-btn-3" aria-expanded="false" aria-controls="panel-3">
-            Can I schedule meetings inside Campus Scheduler?
+            Can I schedule meetings inside ProjeX?
             <i class="fas fa-caret-down"></i>
         </button>
         <div class="panel" id="panel-3" role="region" aria-labelledby="accordion-btn-3" aria-hidden="true">
             <p>
-                <strong>Yes!</strong> Campus Scheduler allows you—<em>or your supervisor</em>—to schedule appointments
+                <strong>Yes!</strong> ProjeX allows you—<em>or your supervisor</em>—to schedule appointments
                 and meetings with ease.
             </p>
         </div>
@@ -78,7 +77,7 @@
         </button>
         <div class="panel" id="panel-4" role="region" aria-labelledby="accordion-btn-4" aria-hidden="true">
             <p>
-                <strong>Yes!</strong> Campus Scheduler enables project managers to
+                <strong>Yes!</strong> ProjeX enables project managers to
                 <em>set deadlines for their employees</em>. Everyone can view these deadlines on the shared calendar and
                 see how much time remains before they are due.
             </p>
