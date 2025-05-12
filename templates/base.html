@@ -6,14 +6,20 @@
         {% endblock %}
     </head>
     <body>
+        <body class="{% block body_class %}{% endblock %}">
+
         <header>
             <nav class="navbar">
                 <div class="nav-container">
                     <div class="nav-logo">
+<<<<<<< HEAD
                         <a href="{{ url_for('index') }}">
                             <img src="{{ url_for('static', filename='images/Logo.png') }}" alt="Logo" style="height: 24px; vertical-align: middle; margin-right: 8px;">
                             ProjeX
                         </a>                        
+=======
+                        <a href="{{ url_for('index') }}"> <i class="fas fa-calendar-alt"></i> ProjeX </a>
+>>>>>>> 90713cc34f74e48ee2bf288140af0d3b3af64ac5
                     </div>
 
                     <button class="nav-toggle" aria-label="toggle navigation">
@@ -22,6 +28,31 @@
 
                     {% import "macros/navigation.html" as nav %}
                     <ul class="nav-menu">
+                        <button
+                            class="theme-toggle"
+                            id="theme-toggle"
+                            title="Toggles light & dark"
+                            aria-label="auto"
+                            aria-live="polite"
+                        >
+                            <svg class="sun-and-moon" aria-hidden="true" width="24" height="24" viewBox="0 0 24 24">
+                                <mask class="moon" id="moon-mask">
+                                    <rect x="0" y="0" width="100%" height="100%" fill="white" />
+                                    <circle cx="24" cy="10" r="6" fill="black" />
+                                </mask>
+                                <circle class="sun" cx="12" cy="12" r="6" mask="url(#moon-mask)" fill="currentColor" />
+                                <g class="sun-beams" stroke="currentColor">
+                                    <line x1="12" y1="1" x2="12" y2="3" />
+                                    <line x1="12" y1="21" x2="12" y2="23" />
+                                    <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" />
+                                    <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
+                                    <line x1="1" y1="12" x2="3" y2="12" />
+                                    <line x1="21" y1="12" x2="23" y2="12" />
+                                    <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" />
+                                    <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
+                                </g>
+                            </svg>
+                        </button>
                         {{ nav.link('Home',    'index',   'fas fa-home') }}
 
                         {% if not session.get('username') %}
@@ -81,38 +112,6 @@
                                     <i class="fas fa-sign-out-alt"></i> Logout
                                 </a>
                             </li>
-                            <button
-                                class="theme-toggle"
-                                id="theme-toggle"
-                                title="Toggles light & dark"
-                                aria-label="auto"
-                                aria-live="polite"
-                            >
-                                <svg class="sun-and-moon" aria-hidden="true" width="24" height="24" viewBox="0 0 24 24">
-                                    <mask class="moon" id="moon-mask">
-                                        <rect x="0" y="0" width="100%" height="100%" fill="white" />
-                                        <circle cx="24" cy="10" r="6" fill="black" />
-                                    </mask>
-                                    <circle
-                                        class="sun"
-                                        cx="12"
-                                        cy="12"
-                                        r="6"
-                                        mask="url(#moon-mask)"
-                                        fill="currentColor"
-                                    />
-                                    <g class="sun-beams" stroke="currentColor">
-                                        <line x1="12" y1="1" x2="12" y2="3" />
-                                        <line x1="12" y1="21" x2="12" y2="23" />
-                                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" />
-                                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
-                                        <line x1="1" y1="12" x2="3" y2="12" />
-                                        <line x1="21" y1="12" x2="23" y2="12" />
-                                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" />
-                                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
-                                    </g>
-                                </svg>
-                            </button>
                         {% endif %}
                     </ul>
                 </div>
@@ -128,12 +127,6 @@
         {% block scripts %}
             <script src="{{ url_for('static', filename='js/navbar.js') }}" defer></script>
             <script>
-                document.addEventListener("DOMContentLoaded", () => {
-                    Sentry.init({
-                        dsn: "https://bd6cee1c1e85487299af017f4c6b0117@app.glitchtip.com/11317",
-                        tracesSampleRate: 0.01,
-                    });
-                });
                 function activatePartyMode() {
                     confetti({ particleCount: 200, spread: 1000 });
                 }

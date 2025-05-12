@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% block body_class %}home-page{% endblock %}
 {% block title %}Home - ProjeX{% endblock %}
 {% block content %}
     <div class="gradient-circle"></div>
@@ -8,18 +9,18 @@
 
     <section class="hero">
         <h1>
-            {% if user %}Welcome, <span class="text-gradient">{{ user }}</span>{% else %}Welcome{% endif %} to your Project Management System
+            {% if user %}Welcome, <span class="text-gradient">{{ user }}</span>{% else %}Welcome{% endif %} to ProjeX!
         </h1>
         <p>
             Your all-in-one solution for managing projects and tasks seamlessly. Dive in to explore and
             organize!
         </p>
-        <div class="hero-features">
+        <!-- <div class="hero-features">
             <span><i class="fas fa-tasks"></i> Task Management</span>
             <span><i class="fas fa-calendar-alt"></i> Event Scheduling</span>
             <span><i class="fas fa-project-diagram"></i> Project Tracking</span>
             <span><i class="fas fa-check-circle"></i> Approval Workflows</span>
-        </div>
+        </div> -->
         <div class="hero-buttons">
             <a href="{{ url_for('projects') }}" class="btn btn-primary">
                 <i class="fas fa-arrow-right"></i> Explore Projects
@@ -31,73 +32,164 @@
         </div>
     </section>
 
-    <!-- FAQ section -->
-    <section class="faq">
-        <h2>Frequently Asked Questions</h2>
+    <!--Cards-->
 
-        <button class="accordion" id="accordion-btn-1" aria-expanded="false" aria-controls="panel-1">
-            What is ProjeX?
-            <i class="fas fa-caret-down"></i>
-        </button>
-        <div class="panel" id="panel-1" role="region" aria-labelledby="accordion-btn-1" aria-hidden="true">
+    <section class="cards-grid">
+        <div class="card card__projects">
+            <i class="fas fa-list-check"></i>
+            <h2>Project Management</h2>
             <p>
-                ProjeX is a Project Management System that is an <strong>all-in-one solution</strong> for managing projects, tasks and events.
-                With it, you can schedule appointments with <em>professors, supervisors, colleagues, and more</em>. It
-                provides a comprehensive way to manage your time and stay up to date with your work by allowing you to
-                receive or assign projects and tasks, as well as leave comments on them.
+                Oversee projects from inception to completion. Create, assign, and monitor tasks with detailed tracking
+                and interactive graph visualizations.
             </p>
+            <div class="glow"></div>
         </div>
 
-        <button class="accordion" id="accordion-btn-2" aria-expanded="false" aria-controls="panel-2">
-            Why use our product?
-            <i class="fas fa-caret-down"></i>
-        </button>
-        <div class="panel" id="panel-2" role="region" aria-labelledby="accordion-btn-2" aria-hidden="true">
+        <div class="card">
+            <i class="fas fa-calendar-days"></i>
+            <h2>Event Scheduling</h2>
             <p>
-                Our product empowers users to manage their time more efficiently than ever before. 
-                offers exceptional flexibility for organizing meetings, activities, and projects with just a few simple
-                interactions.
+                Manage all campus events, from requests to approvals, on a dynamic shared calendar. Keep everyone
+                informed and organized.
             </p>
+            <div class="glow"></div>
         </div>
 
-        <button class="accordion" id="accordion-btn-3" aria-expanded="false" aria-controls="panel-3">
-            Can I schedule meetings inside ProjeX?
-            <i class="fas fa-caret-down"></i>
-        </button>
-        <div class="panel" id="panel-3" role="region" aria-labelledby="accordion-btn-3" aria-hidden="true">
+        <div class="card card__analysis">
+            <i class="fas fa-chart-pie"></i>
+            <h2>Project Analytics</h2>
             <p>
-                <strong>Yes!</strong> ProjeX allows you—<em>or your supervisor</em>—to schedule appointments
-                and meetings with ease.
+                Dive deep into your project data. Our analytics suite helps you identify critical paths, perform
+                cost-crashing analysis to optimize budget
             </p>
+            <h3 class="features-list-heading">Key Analytical Tools:</h3>
+            <ul class="features-list">
+                <li><i class="fas fa-route"></i> Critical Path Identification</li>
+                <li><i class="fas fa-dollar-sign"></i> Cost Crashing Analysis</li>
+                <li><i class="fas fa-project-diagram"></i> Dependency Visualization</li>
+            </ul>
+            <div class="glow"></div>
         </div>
 
-        <button class="accordion" id="accordion-btn-4" aria-expanded="false" aria-controls="panel-4">
-            Can I set deadlines for my employees?
-            <i class="fas fa-caret-down"></i>
-        </button>
-        <div class="panel" id="panel-4" role="region" aria-labelledby="accordion-btn-4" aria-hidden="true">
+        <div class="card">
+            <i class="fas fa-users-gear"></i>
+            <h2>Role-Based System</h2>
+            <p>Ensure data integrity with defined user roles (Admin, Manager, Worker) and easy Google authentication</p>
+            <div class="glow"></div>
+        </div>
+        <div class="card">
+            <i class="fas fa-sitemap"></i>
+            <h2>Network Graphs</h2>
             <p>
+<<<<<<< HEAD
                 <strong>Yes!</strong> ProjeX enables project managers to
                 <em>set deadlines for their employees</em>. Everyone can view these deadlines on the shared calendar and
                 see how much time remains before they are due.
+=======
+                Visualize project structures, task dependencies with dynamic network graphs for clearer understanding
+                and planning.
+>>>>>>> 90713cc34f74e48ee2bf288140af0d3b3af64ac5
             </p>
+            <div class="glow"></div>
+        </div>
+
+        <div class="card card__interface">
+            <i class="fas fa-palette"></i>
+            <h2>User-Friendly Interface</h2>
+            <p>
+                Experience a clean, responsive interface with customizable light and dark themes, with a focus on
+                usability and accessibility.
+            </p>
+            <div class="glow"></div>
         </div>
     </section>
-    <div class="text-center"></div>
-    <script>
-        const acc = document.getElementsByClassName("accordion");
-        for (let i = 0; i < acc.length; i++) {
-            acc[i].addEventListener("click", function () {
-                this.classList.toggle("active");
-                this.setAttribute("aria-expanded", this.classList.contains("active"));
-                const panel = this.nextElementSibling;
-                panel.setAttribute("aria-hidden", !this.classList.contains("active"));
-                if (panel.style.maxHeight) {
-                    panel.style.maxHeight = null;
-                } else {
-                    panel.style.maxHeight = panel.scrollHeight + "px";
-                }
-            });
-        }
-    </script>
+
+    <!-- FAQ section -->
+    <div class="faq-and-info">
+        <section class="faq">
+            <h3>Frequently Asked Questions</h3>
+
+            <button class="accordion" id="accordion-btn-1" aria-expanded="false" aria-controls="panel-1">
+                What is ProjeX?
+                <i class="fas fa-caret-down"></i>
+            </button>
+            <div class="panel" id="panel-1" role="region" aria-labelledby="accordion-btn-1" aria-hidden="true">
+                <p>
+                    ProjeX is your <strong>all-in-one solution</strong> for managing everyday campus activities. With
+                    it, you can schedule appointments with <em>professors, supervisors, colleagues, and more</em>. It
+                    provides a comprehensive way to manage your time and stay up to date with your work by allowing you
+                    to receive or assign projects and tasks, as well as leave comments on them.
+                </p>
+            </div>
+
+            <button class="accordion" id="accordion-btn-2" aria-expanded="false" aria-controls="panel-2">
+                Why use our product?
+                <i class="fas fa-caret-down"></i>
+            </button>
+            <div class="panel" id="panel-2" role="region" aria-labelledby="accordion-btn-2" aria-hidden="true">
+                <p>
+                    Our product empowers users to manage their time more efficiently than ever before. ProjeX offers
+                    exceptional flexibility for organizing meetings, activities, and projects with just a few simple
+                    interactions.
+                </p>
+            </div>
+
+            <button class="accordion" id="accordion-btn-3" aria-expanded="false" aria-controls="panel-3">
+                Can I schedule meetings inside ProjeX?
+                <i class="fas fa-caret-down"></i>
+            </button>
+            <div class="panel" id="panel-3" role="region" aria-labelledby="accordion-btn-3" aria-hidden="true">
+                <p>
+                    <strong>Yes!</strong> ProjeX allows you—<em>or your supervisor</em>—to schedule appointments and
+                    meetings with ease.
+                </p>
+            </div>
+
+            <button class="accordion" id="accordion-btn-4" aria-expanded="false" aria-controls="panel-4">
+                Can I set deadlines for my employees?
+                <i class="fas fa-caret-down"></i>
+            </button>
+            <div class="panel" id="panel-4" role="region" aria-labelledby="accordion-btn-4" aria-hidden="true">
+                <p>
+                    <strong>Yes!</strong> ProjeX enables project managers to <em>set deadlines for their employees</em>.
+                    Everyone can view these deadlines on the shared calendar and see how much time remains before they
+                    are due.
+                </p>
+            </div>
+        </section>
+        <section class="info">
+            <h3>Need help?</h3>
+            <p>If you have any questions or need assistance, please reach out to us at</p>
+            <a href="mailto:business@constructor.university" class="email-link" target="_blank">
+                business@constructor.university
+            </a>
+            <div class="support-links">
+                <p>
+                    <i class="fas fa-book"></i>
+                    <a
+                        href="https://app.swaggerhub.com/apis/softwareproject-afb/Software_project/1.0.0#"
+                        target="_blank"
+                        >Read our documentation</a
+                    >
+                </p>
+                <p>
+                    <i class="fab fa-github"></i>
+                    <a href="https://github.com/awerks/se_project_1000/issues" target="_blank">Report an issue</a>
+                </p>
+                <p>
+                    <i class="fas fa-code"></i>
+                    <a href="https://github.com/awerks/se_project_1000/pulls" target="_blank">Contribute</a>
+                </p>
+            </div>
+        </section>
+    </div>
+
+    <section class="get-started">
+        <h3>The future of project management is now</h3>
+        <a href="{{ url_for('auth.register') }}" class="btn btn-signup">Get started with ProjeX</a>
+    </section>
+
+    {% block extra_js %}
+        <script src="{{ url_for('static', filename='js/index.js') }}"></script>
+    {% endblock %}
 {% endblock %}
